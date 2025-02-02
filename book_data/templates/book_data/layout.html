@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title>{% block title %}Book Search{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style/main_style.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="navbar-item"><a href="">Search</a></li>
+            <li class="navbar-item"><a href="">Reviews</a></li>
+            {% if user.is_authenticated %}
+                <li class="navbar-item"><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li class="navbar-item"><a href="{% url 'login' %}">Login</a></li>
+                <li class="navbar-item"><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+            <li class="navbar-item"><a href="">Profile</a></li>
+        </ul>
+    </div>
+
+
+
+    {% block content %}{% endblock %}
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,66 @@
+.test {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+.navbar-list {
+   list-style-type: none;
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.navbar-item a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+h1 {
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+
+body {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.748);
+}
+
+.container {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.search {
+    display: flex;
+    justify-content: center;
+}
+
+
+.book_container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.book_container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.cover_image {
+    width: 125px;
+    height: auto;
+}
+
