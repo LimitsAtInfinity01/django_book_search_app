@@ -1,0 +1,43 @@
+{% extends "book_data/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Book View
+{% endblock %}
+
+{% block content %}
+    <h1>Individual Book View</h1>
+
+    {% if book_info %}
+
+        <div class="book" id="whole_book_div0">
+            <a class="book_view_link" href="view-book" id="book_title0">
+                <h2 class="title">{{ book_info.title }}</h2>
+            </a>
+            <h3 class="subtitle">{{ book_info.subtitle }}</h3>
+
+
+            {% if book_info.cover_edition_id %}
+                <img src="https://covers.openlibrary.org/b/olid/{{ book_info.cover_edition_id }}-M.jpg" alt="Book Cover">
+            {% else %}
+                <p>No Cover Available</p>
+            {% endif %}
+            
+            
+            <p class="author">Author: {{ book_info.author }}</p>
+            <p class="published_year">{{ book_info.publication_year }}</p>
+            <button id="add-to-reading-list">Add to Reading List</button>
+        </div>
+
+    {% else %}
+        <p>No book data available.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/add_to_reading_list.js' %}"></script>
+{% endblock %}
+
+
+

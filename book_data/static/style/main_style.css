@@ -20,7 +20,10 @@
     text-decoration: none;
 }
 
-
+.book_view_link {
+    color: rgb(244, 137, 56);
+    text-decoration: none;
+}
 
 h1 {
     display: flex;

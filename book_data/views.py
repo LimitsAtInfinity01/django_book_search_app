@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, user_logged_in
 import json
 
+
 from book_data.models import Reviews, Comments, ReadingList
 
 # Create your views here.
@@ -12,24 +13,71 @@ def index(request):
     return render(request, "book_data/index.html")
 
 
+
+def view_book(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print(data)
+            book_info_dict = {
+                "title": data.get('title', 'Unknown'),
+                "subtitle": data.get('subtitle', 'No subtitle'),
+                "cover_edition_id": data.get('cover_edition_key', None),
+                "publication_year": data.get('first_publish_year', 'Unknown'),
+                "language": data.get('language', 'Unknown'),
+                "author": data.get('author_name', 'Unknown'),
+                "author_key": data.get('author_key', 'Unknown'),
+                "open_library_work_id": 0
+            }
+
+            request.session['book_info'] = book_info_dict
+
+            return JsonResponse({'success': True, 'message': 'Data received'})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON'}, status=400)
+
+    book_info = request.session.get('book_info', None)
+    return render(request, 'book_data/view_book.html', {"book_info": book_info})
+
+
+def get_book_info(request):
+    book_info = request.session.get('book_info', None)
+    if book_info:
+        return JsonResponse({'success': True, 'book_info': book_info})
+    return JsonResponse({'success': False, 'message': 'No book data found'})
+
+
 @csrf_exempt
 def add_to_reading_list(request):
-
     if request.method == 'POST':
-        data = json.loads(request.body)
-        
-        if request.user.is_authenticated:
-            reading_list = ReadingList()
-            reading_list.title = data['title']
-            reading_list.open_library_id = data['open_library_work_id']
-            reading_list.author = request.user
-            reading_list.save()
-        else:
-            return redirect('home')
-        
+        try:
+            data = json.loads(request.body)
+            print(data)
+            if not request.user.is_authenticated:
+                return JsonResponse({'success': False, 'message': 'User not authenticated'}, status=401)
 
-    return JsonResponse({'success': True})
+            # Ensure required fields are present
+            if 'title' not in data or 'open_library_work_id' not in data:
+                return JsonResponse({'success': False, 'message': 'Missing required fields'}, status=400)
 
+            # Create or check if book is already in the list
+            reading_list, created = ReadingList.objects.get_or_create(
+                open_library_id=data['open_library_work_id'],
+                author=request.user,
+                defaults={'title': data['title']}
+            )
+
+            if created:
+                return JsonResponse({'success': True, 'message': 'Book added successfully'})
+            else:
+                return JsonResponse({'success': False, 'message': 'Book already in list'})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON data'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
 def login_view(request):
     form = AuthenticationForm()
