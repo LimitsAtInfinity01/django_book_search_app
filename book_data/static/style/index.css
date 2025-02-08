@@ -1,0 +1,98 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.navbar-list {
+   list-style-type: none;
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.navbar-item a {
+    color: white;
+    text-decoration: none;
+}
+
+.book_view_link {
+    color: rgb(244, 137, 56);
+    text-decoration: none;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+
+body {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.748);
+}
+
+.container {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.book_container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.book_container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.cover_image {
+    width: 125px;
+    height: auto;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.search-form-elements {
+    display: flex;
+    position: relative;
+    
+}
+
+.search-box {
+    margin-right: 0;
+    width: 200px;
+    height: 22px;
+    /* border-radius: 5px; */
+    padding: 0;
+}
+
+
+.submit-search {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    bottom: 0px;
+    width: 24px;
+    height: 20px;
+    border: none;
+    background-color: white;
+    margin: 0;
+}
+
+
+/* .search-icon:hover {
+    background-color: red;
+} */
+
+.submit-search:hover {
+    background-color: wheat;
+    cursor: pointer;
+}

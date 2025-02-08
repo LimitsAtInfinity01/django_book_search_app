@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'style/main_style.css' %}">
 </head>
 <body>
-
+    
     <div class="container">
         <ul class="navbar-list">
             <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
@@ -23,8 +23,6 @@
             <li class="navbar-item"><a href="">Profile</a></li>
         </ul>
     </div>
-
-
 
     {% block content %}{% endblock %}
 

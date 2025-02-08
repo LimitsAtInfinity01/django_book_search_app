@@ -7,37 +7,48 @@ import json
 
 
 from book_data.models import Reviews, Comments, ReadingList
+from book_data.forms import ReviewsForm, CommentsForm
 
 # Create your views here.
 def index(request):
     return render(request, "book_data/index.html")
 
 
-
 def view_book(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            print(data)
+
+            authors_string = ''
+            for author in data['author_name']:
+                if authors_string == '':
+                    authors_string = author
+                else:
+                    authors_string = authors_string + ', ' + author
+
             book_info_dict = {
                 "title": data.get('title', 'Unknown'),
                 "subtitle": data.get('subtitle', 'No subtitle'),
                 "cover_edition_id": data.get('cover_edition_key', None),
                 "publication_year": data.get('first_publish_year', 'Unknown'),
                 "language": data.get('language', 'Unknown'),
-                "author": data.get('author_name', 'Unknown'),
+                "author": authors_string,
                 "author_key": data.get('author_key', 'Unknown'),
-                "open_library_work_id": 0
+                "open_library_work_id": data.get('key', 'Unknown')
             }
-
             request.session['book_info'] = book_info_dict
 
             return JsonResponse({'success': True, 'message': 'Data received'})
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'message': 'Invalid JSON'}, status=400)
-
+        
     book_info = request.session.get('book_info', None)
-    return render(request, 'book_data/view_book.html', {"book_info": book_info})
+    return render(request, 'book_data/view_book.html', {
+        "book_info": book_info, 
+        })
+
+def get_data_for_view_book():
+    pass
 
 
 def get_book_info(request):
@@ -52,7 +63,7 @@ def add_to_reading_list(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            print(data)
+            # print(data)
             if not request.user.is_authenticated:
                 return JsonResponse({'success': False, 'message': 'User not authenticated'}, status=401)
 
@@ -62,10 +73,19 @@ def add_to_reading_list(request):
 
             # Create or check if book is already in the list
             reading_list, created = ReadingList.objects.get_or_create(
+                user = request.user,
+                author = data['author'],
+                defaults={'title': data['title']},
                 open_library_id=data['open_library_work_id'],
-                author=request.user,
-                defaults={'title': data['title']}
             )
+
+            # reading_list = ReadingList()
+            # reading_list.user = request.user
+            # reading_list.author = data['author']
+            # reading_list.title = data['title']
+            # reading_list.open_library_id = data['open_library_work_id']
+            # print(data['open_library_work_id'])
+            # reading_list.save()
 
             if created:
                 return JsonResponse({'success': True, 'message': 'Book added successfully'})

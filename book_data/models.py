@@ -31,9 +31,11 @@ class Comments(models.Model):
     class Meta:
         db_table = "comments"
 
+
 #TODO: Reading List Model
 class ReadingList(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.CharField(max_length=50)
     title = models.CharField(max_length=50)
     open_library_id = models.CharField(max_length=50)
 

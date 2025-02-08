@@ -11,7 +11,7 @@
     {% if book_info %}
 
         <div class="book" id="whole_book_div0">
-            <a class="book_view_link" href="view-book" id="book_title0">
+            <a class="book_view_link" href="#" id="book_title0">
                 <h2 class="title">{{ book_info.title }}</h2>
             </a>
             <h3 class="subtitle">{{ book_info.subtitle }}</h3>
@@ -32,6 +32,16 @@
     {% else %}
         <p>No book data available.</p>
     {% endif %}
+    
+
+    <div class="review-form-div">
+        <form action="" class="review-form" method="POST">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" name="" id="review-form-submit" value="submit">
+        </form>
+    </div>
+    
 
 {% endblock %}
 

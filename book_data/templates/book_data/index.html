@@ -1,11 +1,41 @@
-{% extends "book_data/layout.html" %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title></title>
+    <link rel="stylesheet" href="{% static 'style/index.css' %}">
+</head>
+<body>
 
-{% block title %}
-    Home
-{% endblock %}
-
-{% block content %}
+    <div class="container">
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
+            <div class="search">
+                <form action="" >
+                    <div class="search-form-elements">
+                        <input class="search-box" type="text" value="Dean Koonts">
+                        <button class="submit-search" type="submit">
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                                <circle cx="10" cy="10" r="7" stroke="black" stroke-width="2" fill="none"/>
+                                <line x1="15" y1="15" x2="22" y2="22" stroke="black" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <li class="navbar-item"><a href="">Search</a></li>
+            <li class="navbar-item"><a href="">Reviews</a></li>
+            {% if user.is_authenticated %}
+                <li class="navbar-item"><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li class="navbar-item"><a href="{% url 'login' %}">Login</a></li>
+                <li class="navbar-item"><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+            <li class="navbar-item"><a href="">Profile</a></li>
+        </ul>
+    </div>
 
     <div class="current-user">
         {% if user.is_authenticated %}
@@ -13,21 +43,11 @@
         {% endif %}
     </div>
 
-    <h1 class="container">Book Search</h1>
-
-    <div class="container search">
-        <form action="" >
-            <input class="search-box" type="text" value="Dean Koonts">
-            <button class="submit-search" type="submit">Search</button>
-        </form>
-    </div>
+    <div class="container book_container" ></div>
 
 
-<div class="container book_container" ></div>
-
-{% endblock %}
-
-{% block scripts %}
     <script src="{% static 'scripts/get_book_data.js' %}" type="module"></script>
     <script src="{% static 'scripts/script.js' %}" type="module"></script>
-{% endblock %}
+
+</body>
+</html>

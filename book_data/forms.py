@@ -10,4 +10,4 @@ class ReviewsForm(forms.ModelForm):
 class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
-        fields = ['content']
+        fields = ['content', 'author']

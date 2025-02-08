@@ -26,7 +26,7 @@ function individualBookView() {
                 && subtitle_from_books === subtitle_from_element)
             {
 
-                fetch('/view-book', {  // ✅ Ensure this matches `urls.py`
+                fetch('/get_data_for_view_book', {  // ✅ Ensure this matches `urls.py`
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
