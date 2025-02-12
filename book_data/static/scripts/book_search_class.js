@@ -1,3 +1,5 @@
+// book_search_class.js
+
 export class SearchOL {
     constructor(search_term) {
         this.search_term = encodeURIComponent(search_term);
@@ -26,9 +28,13 @@ export class SearchOL {
         if (!this.general_search_results.length) throw new Error("No search results available");
     }
 
-    async cover_id_url(cover_id) {
+    async cover_url(cover_id) {
+        if (!cover_id) {
+            return "https://via.placeholder.com/150?text=No+Cover";
+        }
         this.cover_id = cover_id;
         this.complete_cover_url = `https://covers.openlibrary.org/b/olid/${this.cover_id}-M.jpg`;
+    
         try {
             const response = await fetch(this.complete_cover_url);
             return response.ok ? this.complete_cover_url : "https://via.placeholder.com/150?text=No+Cover";
@@ -37,6 +43,7 @@ export class SearchOL {
             return "https://via.placeholder.com/150?text=Error";
         }
     }
+    
 
     async search_title(title) {
         await this.ensureSearchReady();
@@ -46,7 +53,7 @@ export class SearchOL {
         return result ? result.title : "Title not found";
     }
 
-    async return_book_key_by_title(title) {
+    async book_key_by_title(title) {
         await this.ensureSearchReady();
         const result = this.general_search_results.find(
             book => book.title?.toLowerCase() === title.toLowerCase()
@@ -57,28 +64,31 @@ export class SearchOL {
     async returns_all_keys(){
         const keys = []
         const results = this.general_search_results
-        console.log(results[0]['key'])
         results.map(result => keys.push(result['key']))
-        console.log(keys)
+        return keys
     }
 
     async return_book_data(book_key) {
         await this.ensureSearchReady();
         const result = this.general_search_results.find(book => book.key === book_key);
-        const cover_url = await this.cover_id_url(result['cover_edition_key'])
+        
         if (!result) return "Book data not found";
+    
         return {
-            author_key: result.author_key,
-            author_name: result.author_name,
-            cover_edition_key: result.cover_edition_key,
-            cover_url: cover_url,
-            first_publish_year: result.first_publish_year,
+            author_key: result.author_key || [],
+            author_name: result.author_name || ["Unknown Author"],
+            cover_edition_key: result.cover_edition_key || null,
+            cover_url: result.cover_edition_key 
+                ? await this.cover_url(result.cover_edition_key) 
+                : "/static/images/books.jpeg",
+            first_publish_year: result.first_publish_year || "Unknown Year",
             key: book_key,
-            language: result.language,
-            title: result.title,
-            subtitle: result.subtitle
+            language: result.language || ["Unknown Language"],
+            title: result.title || "Unknown Title",
+            subtitle: result.subtitle || "",
         };
     }
+    
 }
 
 

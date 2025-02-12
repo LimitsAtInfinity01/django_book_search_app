@@ -3,31 +3,67 @@
     box-sizing: border-box;
 }
 
+body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    margin-top: 75px;
+}
+
 .navbar-list {
-   list-style-type: none;
-   display: flex;
-   justify-content: space-evenly;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #E56399;
+    height: 30px;
+    width: 75%; /* Controls the width */
+    position: fixed; /* Keeps it fixed */
+    top: 0.8rem; /* Distance from the top */
+    left: 50%; /* Moves the left edge to the center */
+    transform: translateX(-50%); /* Centers the navbar */
+    margin-bottom: 50px;
+    border-radius: 5px;
+}
+
+ .current-user {
+    position: fixed; /* Keeps it fixed */
+    top: 2rem; /* Distance from the top */
+    left: 12.5%;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+ }
+
+.welcome {
+    color: #7FD1B9;
+    font-weight: 800;
+    
+    
+}
+
+.user-name {
+    color: #A2D2FF;
 }
 
 .navbar-item a {
     color: white;
     text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
-.book_view_link {
-    color: rgb(244, 137, 56);
-    text-decoration: none;
-}
-
-h1 {
-    display: flex;
-    justify-content: center;
-    color: red;
+.navbar-item a:hover {
+    color: #7FD1B9;
 }
 
 body {
     color: white;
-    background-color: rgba(0, 0, 0, 0.748);
+    background-color: #7A6563;
+    padding: 0;
+    margin: 0;
 }
 
 .container {
@@ -36,23 +72,6 @@ body {
     margin-right: auto;
 }
 
-
-.book_container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.book_container {
-    display: flex;
-    justify-content: center;
-}
-
-
-.cover_image {
-    width: 125px;
-    height: auto;
-}
 
 .search {
     display: flex;
@@ -88,9 +107,6 @@ body {
 }
 
 
-/* .search-icon:hover {
-    background-color: red;
-} */
 
 .submit-search:hover {
     background-color: wheat;

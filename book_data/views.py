@@ -13,6 +13,12 @@ from book_data.forms import ReviewsForm, CommentsForm
 def index(request):
     return render(request, "book_data/index.html")
 
+def book_details(request, book_id): 
+    print(book_id)
+    return render(request, 'book_data/book_details.html', {'book_id': book_id})
+
+def fetch_book_data_on_click():
+    pass
 
 def login_view(request):
     form = AuthenticationForm()

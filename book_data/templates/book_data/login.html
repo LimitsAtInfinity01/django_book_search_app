@@ -8,11 +8,15 @@
 
 {% block content %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }} 
-        <button type="submit">Login</button>
-    </form>
+    <div class="main-container">
+        <h1>Log in Here!</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }} 
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
 
 {% endblock %}
 

@@ -7,12 +7,15 @@
 {% endblock %}
 
 {% block content %}
-
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }} 
-        <button type="submit">Register</button>
-    </form>
+    <div class="main-container">
+        <h1>Register Here!</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }} 
+            <button type="submit">Register</button>
+        </form>
+    
+    </div>
 
 {% endblock %}
 

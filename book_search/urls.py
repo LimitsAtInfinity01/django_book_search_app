@@ -18,10 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from book_data.views import (index, login_view, 
-                             register, logout_view)
+                             register, logout_view,
+                             book_details)
 
 urlpatterns = [
     path('', index, name='index'),
+    path('book/<str:book_id>/', book_details, name='book_details'),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', register, name='register'),
