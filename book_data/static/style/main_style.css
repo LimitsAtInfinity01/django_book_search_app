@@ -5,7 +5,9 @@
 
 body {
     color: white;
-    background-color: #7A6563
+    background-color: #BB8588;
+    padding: 0;
+    margin: 0;
 }
 
 .main-container {
@@ -33,11 +35,11 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #E56399;
+    background-color: #e07a5f;
     height: 30px;
     width: 75%; /* Controls the width */
     position: fixed; /* Keeps it fixed */
-    top: 0.8rem; /* Distance from the top */
+    top: 0.1rem; /* Distance from the top */
     left: 50%; /* Moves the left edge to the center */
     transform: translateX(-50%); /* Centers the navbar */
     margin-bottom: 50px;
@@ -47,10 +49,17 @@ body {
 .navbar-item a {
     color: white;
     text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
 
+.submit-search:hover {
+    background-color: wheat;
+    cursor: pointer;
+}
 
-
-
+.navbar-item a:hover {
+    color: #7FD1B9;
+}
 

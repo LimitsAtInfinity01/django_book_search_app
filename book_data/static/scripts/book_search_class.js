@@ -23,6 +23,8 @@ export class SearchOL {
         }
     }
 
+    
+
     async ensureSearchReady() {
         await this.searchPromise;
         if (!this.general_search_results.length) throw new Error("No search results available");

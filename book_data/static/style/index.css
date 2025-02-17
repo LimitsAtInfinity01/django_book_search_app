@@ -9,7 +9,7 @@ body, ul {
 }
 
 .main-content {
-    margin-top: 75px;
+    margin-top: 50px;
 }
 
 .navbar-list {
@@ -17,7 +17,7 @@ body, ul {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #E56399;
+    background-color: #e07a5f;
     height: 30px;
     width: 75%; /* Controls the width */
     position: fixed; /* Keeps it fixed */
@@ -61,7 +61,7 @@ body, ul {
 
 body {
     color: white;
-    background-color: #7A6563;
+    background-color: #BB8588;
     padding: 0;
     margin: 0;
 }

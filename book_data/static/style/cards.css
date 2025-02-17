@@ -1,14 +1,15 @@
 
 .book_container {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
     gap: 20px;
     color: black;
     padding-top: 50px;
 
 }
-
-
 
 .book-image {
     width: 125px;
@@ -22,12 +23,14 @@
 
 .book-card {
     width: 300px;
+    max-height: auto;
     border: 2px solid black;
     border-radius: 10px;
     background-color: antiquewhite;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .book-title {
@@ -68,11 +71,44 @@ ul.book-languages li {
     text-align: center;
 }
 
-.book-authors {
-    margin-top: 10px;
-}
 
 .book-image-container {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.language-container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.author-heading {
+    text-align: center;
+}
+
+.book-authors {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.book-year {
+    text-align: center;
+}
+
+.book-authors {
+    max-width: 50%;
+    text-align: center;
+}
+
+.author-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

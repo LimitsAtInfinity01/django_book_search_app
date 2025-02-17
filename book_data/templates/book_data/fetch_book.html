@@ -1,0 +1,79 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/fetch_book.css' %}">
+{% endblock %}
+    
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="book_details_main_container">
+
+    {% if book_details %}
+        <header>
+            <h1>{{ book_details.title }}</h1>
+        </header>
+        <main class="book-description-container">
+            
+            <div>
+                <img src="{{ book_details.cover }}" alt='book cover'  class="book_cover">
+                <p class="author_name">{{ book_details.author_name }}</p>
+                <p class="publish_date">
+                    <time>{{ book_details.first_publish_date }}</time>
+                </p>
+                <div class="reading_list">
+                    <form action="">
+                        <button type="submit">Add to reading list</button>
+                    </form>
+                </div>
+            </div>
+            
+            <article class="description-section">
+                <div class="description">
+                    {{ book_details.description }}
+                </div>
+                <div>
+                    {{ book_details.subject_places }}
+                </div>
+                <div>
+                    {{ book_details.subject_times }}
+                </div>
+                <div class="review-link">
+                    <a href="{% url 'write_review' %}">Write a review</a>
+                </div>
+            </article>
+
+        </main>
+        
+    {% endif %}
+
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="review-container">
+
+                <div class="reviewer-related">
+                    <p class="review-reviewer"><strong>Reviewer:</strong> {{ review.reviewer }}</p>
+                </div>
+
+                <div class="review-related">
+                    <p class="review-title" ><strong>Title:</strong> {{ review.title }}</p>
+                    <p class="review-content"><strong>Content:</strong> {{ review.content }}</p>
+                    <p class="review-rating"><strong>Rating:</strong> {{ review.rating }}</p>
+                    <p class="review-date"><strong>Date:</strong> {{ review.review_date }}</p>
+                </div>
+                
+            </div>
+
+        {% endfor %}
+    {% else %}
+        <p>No reviews available.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -6,10 +6,11 @@
     {% load static %}
     <title>{% block title %}Book Search{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'style/main_style.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     
-    <div class="container">
+    <nav class="container">
         <ul class="navbar-list">
             <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
             <li class="navbar-item"><a href="">Search</a></li>
@@ -22,7 +23,7 @@
             {% endif %}
             <li class="navbar-item"><a href="">Profile</a></li>
         </ul>
-    </div>
+    </nav>
 
     {% block content %}{% endblock %}
 

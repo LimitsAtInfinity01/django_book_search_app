@@ -42,7 +42,10 @@ export class BookCard {
             <div class="book-image-container">
                 <img src="${this.imgSrc}" alt="${this.imgAlt}" class="book-image">
             </div>
-            <p class="book-authors">Authors: ${this.authors}</p>
+            <div class='author-container'>
+                <p class='author-heading'>Authors</p>
+                <p class="book-authors">${this.authors}</p>
+            </div>
             <div class='language-container'>
                 <p class='languages-heading'>Languages</p>
                 <ul class="book-languages">

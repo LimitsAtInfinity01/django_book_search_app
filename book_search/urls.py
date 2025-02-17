@@ -19,13 +19,14 @@ from django.contrib import admin
 from django.urls import path
 from book_data.views import (index, login_view, 
                              register, logout_view,
-                             book_details)
+                            fetch_book, write_review)
 
 urlpatterns = [
     path('', index, name='index'),
-    path('book/<str:book_id>/', book_details, name='book_details'),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
     path('register/', register, name='register'),
     path("admin/", admin.site.urls),
+    path('write-review/', write_review, name='write_review'),
+    path('fetch_book/<str:book_id>/<str:cover_key>/', fetch_book, name='fetch_book')
 ]

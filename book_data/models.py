@@ -7,11 +7,12 @@ from django.contrib.auth.models import User
 
 #TODO: Reviews with ratings
 class Reviews(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
+    book_id = models.CharField(max_length=50)
     title = models.CharField(max_length=50)
     content = models.TextField()
     rating = models.IntegerField()
-    data_time = models.DateTimeField()
+    review_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
