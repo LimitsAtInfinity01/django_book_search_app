@@ -68,6 +68,7 @@ def fetch_book(request, book_id, cover_key):
         'reviews': all_reviews
     }
     
+    print(context['reviews'])
     return render(request, 'book_data/fetch_book.html', context)
 
 @login_required 

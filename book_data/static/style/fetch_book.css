@@ -1,49 +1,65 @@
 
-
-.book_details_main_container {
+.container {
+    margin-top: 75px;
     display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.book-description-container{
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-}
-
-.description {
-    text-align: start;
-}
-
-.review-link {
-    margin-top: 1rem;
-    text-align: start;
-}
-
-.book_cover {
-    max-width: 150px;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
     height: auto;
 }
 
-.review-container {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; 
-    /* border: solid black 2px; */
-}
-
-
-.review-related {
-    /* border: solid black 2px; */
-    flex: 2;
-}
-
-.reviewer-related {
+.book-info-container {
+    flex: 1;
+    /* border: solid black 1px; */
+    position: sticky;
+    height: 200px;
+    position: sticky;
+    top: 75px;
     display: flex;
     flex-direction: column;
-    /* border: solid black 2px; */
-    text-wrap: wrap;
+    align-items: center;
+    
+    max-width: 17rem;
+}
+
+.summary-reviews-container {
+    flex: 2;
+    /* border: solid black 1px; */
+    margin: 0;
+}
+
+.reviews {
+    display: flex;
+    
+}
+
+.user-info {
     flex: 1;
+    margin-top: 3rem;
+    /* border: solid black 1px; */
+}
+
+.review {
+    flex: 2;
+    /* border: solid black 1px; */
+    margin-top: 3rem;
+}
+
+.cover-image {
+    border-radius: 10px;
+}
+
+.subject-places-time {
+    display: flex;
+    justify-content: start;
+}
+
+.book-title {
+    font-size: 3rem;
+}
+
+.title-date-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
