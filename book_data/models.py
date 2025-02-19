@@ -36,13 +36,11 @@ class Comments(models.Model):
 #TODO: Reading List Model
 class ReadingList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    author = models.CharField(max_length=50)
     title = models.CharField(max_length=50)
-    open_library_id = models.CharField(max_length=50)
-
+    book_id = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"{self.title} ({self.open_library_id})"
+        return f"{self.title} ({self.book_id})"
     
     class Meta:
         db_table = "reading_list"

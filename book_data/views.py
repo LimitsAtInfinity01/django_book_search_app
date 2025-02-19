@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, user_logged_in
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 import json
 import requests
 
@@ -15,6 +16,20 @@ from book_data.forms import ReviewsForm, CommentsForm
 def index(request):
     return render(request, "book_data/index.html")
 
+@login_required
+def add_reading_list(request):
+    book_details = request.session.get('book_details')  # Use as needed in your logic
+    bookID = book_details.get('book_id')
+    coverKey = book_details.get('cover_key')
+    title = book_details.get('title')
+
+    
+    reading_list = ReadingList(user = request.user,
+                            title = title,
+                            book_id = bookID)
+    reading_list.save()
+
+    return redirect(fetch_book, bookID, coverKey)
 
 def fetch_book(request, book_id, cover_key):
     api_url = f'https://openlibrary.org/works/{book_id}.json'
@@ -68,7 +83,6 @@ def fetch_book(request, book_id, cover_key):
         'reviews': all_reviews
     }
     
-    print(context['reviews'])
     return render(request, 'book_data/fetch_book.html', context)
 
 @login_required 
@@ -100,7 +114,6 @@ def write_review(request):
     else:
         form = ReviewsForm()
     return render(request, 'book_data/write_review.html', {'form': form})
-
 
 def login_view(request):
     form = AuthenticationForm()

@@ -3,6 +3,13 @@
     box-sizing: border-box;
 }
 
+body {
+    color: white;
+    background-color: #eac4c6cc;
+    padding: 0;
+    margin: 0;
+}
+
 body, ul {
     margin: 0;
     padding: 0;
@@ -18,10 +25,10 @@ body, ul {
     justify-content: space-evenly;
     align-items: center;
     background-color: #e07a5f;
-    height: 30px;
+    height: 50px;
     width: 75%; /* Controls the width */
     position: fixed; /* Keeps it fixed */
-    top: 0.8rem; /* Distance from the top */
+    top: 0.5rem; /* Distance from the top */
     left: 50%; /* Moves the left edge to the center */
     transform: translateX(-50%); /* Centers the navbar */
     margin-bottom: 50px;
@@ -59,12 +66,7 @@ body, ul {
     color: #7FD1B9;
 }
 
-body {
-    color: white;
-    background-color: #BB8588;
-    padding: 0;
-    margin: 0;
-}
+
 
 .container {
     max-width: 1024px;

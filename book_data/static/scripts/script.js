@@ -11,7 +11,7 @@ async function fetchBookData(search_term){
     const books = []
     let index = 0
     for (const key of keys){
-        if (index === 3) break
+        if (index === 6) break
         const book = await search.return_book_data(key)
         books.push(book)
         index++;

@@ -40,7 +40,9 @@ export class BookCard {
         card.innerHTML += `
             ${this.subtitle ? `<h3 class="book-subtitle">Subtitle: ${this.subtitle}</h3>` : ""}
             <div class="book-image-container">
-                <img src="${this.imgSrc}" alt="${this.imgAlt}" class="book-image">
+                <a href="${this.bookUrl}">
+                    <img src="${this.imgSrc}" alt="${this.imgAlt}" class="book-image">
+                </a>
             </div>
             <div class='author-container'>
                 <p class='author-heading'>Authors</p>

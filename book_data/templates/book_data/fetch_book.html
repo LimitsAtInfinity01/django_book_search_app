@@ -14,12 +14,21 @@
 
     <div class="container">
 
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         {% if book_details %}
 
         <div class="book-info-container">
             <img class="cover-image" src="{{ book_details.cover }}" alt="" width="100px">
             <p>{{ book_details.author_name}}</p>
             <p>{{ book_details.first_publish_date }}</p>
+            <a href="{% url 'add_reading_list' %}">Add to reading list!</a>
         </div>
         <div class="summary-reviews-container">
             <main class="book-summary">
@@ -44,7 +53,7 @@
                     </ul>
                     
                 </div>
-
+                <hr class="line">
             </main>
 
         {% endif %}
@@ -53,16 +62,25 @@
             {% for review in reviews %}
             <section class="reviews">
                 <div class="user-info">
+
+                    <img src="{% static 'images/avatar.png' %}" class="avatar">
                     <p>{{ review.reviewer }}</p>
                 </div>
                 <div class="review">
                     <div class="title-date-container">
+                        <span>{{ review.rating }}</span>
+
+                        <div class="stars">
+                            <span onclick="gfg(1)">★</span>
+                        </div>
+
                         <time datetime="">{{ review.review_date }}</time>
                     </div>
                     <p>{{ review.content }}</p>
-                    <span>{{ review.rating }}</span>
+                    
                 </div>
             </section>
+            <hr class="line">
             {% endfor %}
         {% endif %}
         </div>
