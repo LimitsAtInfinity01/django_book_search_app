@@ -1,6 +1,7 @@
 import requests
 import json
 
+#TODO Redisign
 def fetch_book_data(book_id, cover_key):
     
     api_url = f'https://openlibrary.org/works/{book_id}.json'
