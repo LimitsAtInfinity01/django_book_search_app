@@ -20,9 +20,10 @@
             </li>
             <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
             <div class="search">
-                <form action="" class="search-form">
+                <form action="{% url 'index' %}" class="search-form" method="POST">
+                    {% csrf_token %}
                     <div class="search-form-elements">
-                        <input class="search-box" type="text">
+                        <input class="search-box" type="text" name="query">
                         <button class="submit-search" type="submit">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
                                 <circle cx="10" cy="10" r="7" stroke="black" stroke-width="2" fill="none"/>
@@ -53,11 +54,13 @@
             {% endif %}
         </div>
 
-        <div class="book_container" ></div>
+        <div class="book_container" >
+            <p>{{ query }}</p>
+        </div>
     </div>
 
-    <script src="{% static 'scripts/book_search_class.js' %}" type="module"></script>
-    <script src="{% static 'scripts/script.js' %}" type="module"></script>
+    <!-- <script src="{% static 'scripts/book_search_class.js' %}" type="module"></script>
+    <script src="{% static 'scripts/script.js' %}" type="module"></script> -->
 
 </body>
 </html>

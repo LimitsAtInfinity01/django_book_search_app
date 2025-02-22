@@ -11,11 +11,22 @@ import requests
 
 from book_data.models import Reviews, Comments, ReadingList
 from book_data.forms import ReviewsForm, CommentsForm
-from book_data.fetch_book_data import fetch_book_data
+from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
 def index(request):
+    
+    if request.method == "POST":
+        query = request.POST.get('query')
+
+        books = main_fetch(query)
+
+        for i in range(10):
+            print(books[i])
+
+        return render(request, "book_data/index.html", { 'query': query })
     return render(request, "book_data/index.html")
+
 
 @login_required
 def user_reading_list(request):
@@ -28,7 +39,7 @@ def user_reading_list(request):
         book_id = item.book_id
         cover_key = item.cover_id
 
-        book = fetch_book_data(book_id, cover_key)
+        book = book_data_reading_list(book_id, cover_key)
         books.append(book)
 
     return render(request, 'book_data/user_reading_list.html', { 'books': books })
