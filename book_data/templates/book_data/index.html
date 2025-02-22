@@ -49,6 +49,7 @@
         <div class="current-user">
             {% if user.is_authenticated %}
                 <h3><span class="welcome">Welcome, </span><span class="user-name">{{ user.username }}</span></h3>
+                <a href="{% url 'user_reading_list' %}">My Readig List</a>
             {% endif %}
         </div>
 

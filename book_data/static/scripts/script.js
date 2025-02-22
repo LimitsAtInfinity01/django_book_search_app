@@ -11,7 +11,7 @@ async function fetchBookData(search_term){
     const books = []
     let index = 0
     for (const key of keys){
-        if (index === 6) break
+        if (index === 10) break
         const book = await search.return_book_data(key)
         books.push(book)
         index++;
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     key: key,
                     cardClasses: ["book-card"],
                     cardId: `book${index + 1}`,
-                    bookUrl: `/fetch_book/${key}/${cover_key}/`
+                    bookUrl: `/book_view/${key}/${cover_key}/`
 
                 };
                 

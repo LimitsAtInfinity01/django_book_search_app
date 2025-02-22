@@ -1,0 +1,36 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/reading_list.css' %}">
+{% endblock %}
+
+
+{% block title %}
+    Reading List
+{% endblock %}
+
+{% block content %}
+    
+    <div class="list">
+
+        {% if request.user.is_authenticated %}
+
+            <p>{{ request.user.username }}</p>
+            <p>{{ request.user.id }}</p>
+            <ol>
+                {% for book in books %}
+                    <li>{{ book.title }}</li>
+                    <li>{{ book.cover }}</li>
+                {% endfor %}
+            </ol>
+
+        {% endif %}
+
+
+    </div>
+    
+
+
+{% endblock%}

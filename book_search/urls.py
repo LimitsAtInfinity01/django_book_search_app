@@ -19,8 +19,8 @@ from django.contrib import admin
 from django.urls import path
 from book_data.views import (index, login_view, 
                             register, logout_view,
-                            fetch_book, write_review, 
-                            add_reading_list)
+                            book_view, write_review, 
+                            add_reading_list, user_reading_list)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -30,5 +30,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('write-review/', write_review, name='write_review'),
     path('add_reading_list/', add_reading_list, name='add_reading_list'),
-    path('fetch_book/<str:book_id>/<str:cover_key>/', fetch_book, name='fetch_book')
+    path('user_reading_list/', user_reading_list, name='user_reading_list'),
+    path('book_view/<str:book_id>/<str:cover_key>/', book_view, name='book_view')
 ]

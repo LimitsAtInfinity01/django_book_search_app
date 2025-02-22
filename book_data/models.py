@@ -38,6 +38,7 @@ class ReadingList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     book_id = models.CharField(max_length=50)
+    cover_id = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.title} ({self.book_id})"

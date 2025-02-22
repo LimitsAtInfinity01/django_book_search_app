@@ -11,10 +11,27 @@ import requests
 
 from book_data.models import Reviews, Comments, ReadingList
 from book_data.forms import ReviewsForm, CommentsForm
+from book_data.fetch_book_data import fetch_book_data
 
 # Create your views here.
 def index(request):
     return render(request, "book_data/index.html")
+
+@login_required
+def user_reading_list(request):
+    user = request.user
+    reading_list = ReadingList.objects.filter(user=user)
+
+    books = []
+
+    for item in reading_list:
+        book_id = item.book_id
+        cover_key = item.cover_id
+
+        book = fetch_book_data(book_id, cover_key)
+        books.append(book)
+
+    return render(request, 'book_data/user_reading_list.html', { 'books': books })
 
 @login_required
 def add_reading_list(request):
@@ -23,15 +40,23 @@ def add_reading_list(request):
     coverKey = book_details.get('cover_key')
     title = book_details.get('title')
 
-    
-    reading_list = ReadingList(user = request.user,
-                            title = title,
-                            book_id = bookID)
-    reading_list.save()
+    reading_list, created = ReadingList.objects.get_or_create(
+        user = request.user,
+        title = title,
+        book_id = bookID,
+        cover_id = coverKey
+    )
 
-    return redirect(fetch_book, bookID, coverKey)
+    if created:
+        print(f'Book with {title} and {bookID} added')
+        messages.info(request, 'Book added to reading list!')
+    else:
+         print(f'Book with {title} and {bookID} not added')
 
-def fetch_book(request, book_id, cover_key):
+
+    return redirect(book_view, bookID, coverKey)
+
+def book_view(request, book_id, cover_key):
     api_url = f'https://openlibrary.org/works/{book_id}.json'
 
     response = requests.get(api_url)
@@ -48,10 +73,16 @@ def fetch_book(request, book_id, cover_key):
     else:
         cover_url = '/static/images/books.jpeg'
 
+    desc = data.get('description', '')
+    if isinstance(desc, dict):
+        description = desc.get('value', '')
+    else:
+        description = desc
+
     book_details = {
         "author_name": author_full_name.get('name', ''),  # fallback to empty string if missing
         "author_key": data.get('authors', [{}])[0].get('author', {}).get('key', ''),
-        "description": data.get('description', ''),
+        "description": description,
         "title": data.get('title', ''),
         "cover": cover_url,  # Assuming cover_url is always provided
         "subject_places": data.get('subject_places', []),  # fallback to empty list
@@ -83,7 +114,7 @@ def fetch_book(request, book_id, cover_key):
         'reviews': all_reviews
     }
     
-    return render(request, 'book_data/fetch_book.html', context)
+    return render(request, 'book_data/book_view.html', context)
 
 @login_required 
 def write_review(request):
@@ -140,3 +171,4 @@ def register(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+

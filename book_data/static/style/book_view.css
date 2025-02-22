@@ -1,6 +1,6 @@
 
 .container {
-    margin-top: 75px;
+    margin-top: 100px;
     display: flex;
     width: 75%;
     margin-left: auto;
@@ -64,13 +64,9 @@
     padding: 0;
 }
 
-.subject-places-time {
-    display: flex;
-    justify-content: start;
-}
 
 .book-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .title-date-container {
@@ -88,4 +84,9 @@
 
 .avatar {
     max-width: 40%;
+}
+
+.subject-places-time {
+    display: flex;
+    justify-content: space-between;
 }

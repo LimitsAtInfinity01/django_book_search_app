@@ -36,23 +36,37 @@ body, ul {
 }
 
  .current-user {
-    position: fixed; /* Keeps it fixed */
-    top: 2rem; /* Distance from the top */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 75%;
+    margin-top: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    height: auto;
+}
+
+.current-user h3 {
+    position: fixed;
     left: 12.5%;
-    border-radius: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
- }
+}
+
+.current-user a {
+    position: fixed;
+    right: 12.5%;
+}
+
 
 .welcome {
-    color: #7FD1B9;
+    color: #0d683c;
     font-weight: 800;
-    
-    
+    font-size: 1.5rem;
 }
 
 .user-name {
-    color: #A2D2FF;
+    color: #9f4a09;
+    font-size: 1.5rem;
 }
 
 .navbar-item a {
