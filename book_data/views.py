@@ -21,10 +21,10 @@ def index(request):
 
         books = main_fetch(query)
 
-        for i in range(10):
-            print(books[i])
+        books = books[0:11]
+        
 
-        return render(request, "book_data/index.html", { 'query': query })
+        return render(request, "book_data/index.html", { 'books': books })
     return render(request, "book_data/index.html")
 
 

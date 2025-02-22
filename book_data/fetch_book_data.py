@@ -16,21 +16,26 @@ def main_fetch(search_term):
 
     books = []
     for doc in data['docs']:
+        key = doc.get('key', '')
+        cleaned_key = key.split('/')[2]
+        print(cleaned_key)
         cover_edition_key = doc.get('cover_edition_key', '')
         if cover_edition_key == '':
             cover_url = '/static/images/books.jpeg'
         else:
-            cover_url = f'https://covers.openlibrary.org/b/olid/{cover_edition_key}-M.jpg`'
+            cover_url = f'https://covers.openlibrary.org/b/olid/{cover_edition_key}-M.jpg'
 
         book = {
-        "author_key": doc.get('author_key', 'N/A'),
-        "author_name": doc.get('author_name', 'N/A'),
-        'cover_edition_key': cover_edition_key, 
-        "cover_url": cover_url,
-        "first_publish_year": doc.get('first_publish_year', 'N/A'),
-        "language": doc.get('language', 'N/A'),
-        "title": doc.get('title', 'N/A'),
-        "subtitle": doc.get('subtitle', 'N/A')
+            "author_key": doc.get('author_key', 'N/A'),
+            "author_name": doc.get('author_name', 'N/A'),
+            'cover_edition_key': cover_edition_key, 
+            "cover_url": cover_url,
+            "key": key,
+            "first_publish_year": doc.get('first_publish_year', 'N/A'),
+            "language": doc.get('language', 'N/A'),
+            "title": doc.get('title', 'N/A'),
+            "subtitle": doc.get('subtitle', 'N/A'),
+            "bookUrl": f'/book_view/{cleaned_key}/{cover_edition_key}/'
         }   
 
         books.append(book)

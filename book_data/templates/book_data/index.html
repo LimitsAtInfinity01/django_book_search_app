@@ -55,7 +55,49 @@
         </div>
 
         <div class="book_container" >
-            <p>{{ query }}</p>
+            {% if books %}
+
+                {% for book in books %}
+
+                    <div class="book-card">
+                        <a href="{{ book.bookUrl }}">
+                            <h2 class="book-title">{{ book.title }}</h2>
+                        </a>
+                        <h3 class="book-subtitle">Subtitle: {{ book.subtitle }}</h3>
+                        <div class="book-image-container">
+                            <a href="{{ book.bookUrl }}">
+                                <img src="{{ book.cover_url }}" alt="" class="book-image">
+                            </a>
+                        </div>
+                        <div class='author-container'>
+                            <p class='author-heading'>Authors</p>
+                            <p class="book-authors">
+
+                                {% for author in book.author_name %}
+                                    {{ author }}
+                                {% endfor %}
+
+                                
+                            </p>
+                        </div>
+                        <div class='language-container'>
+                            <p class='languages-heading'>Languages</p>
+                            <ul class="book-languages">
+                                
+                                    {% for lan in book.language %}
+                                        <li>{{ lan }}</li>
+                                    {% endfor %}
+                                
+                            </ul>
+                        </div>
+                        <span hidden class='hidden-key'>{{ book.key }}</span>
+                        <p class="book-year">Year published: {{ book.first_publish_year }} </p>
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+        
         </div>
     </div>
 
