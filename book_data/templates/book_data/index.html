@@ -23,7 +23,7 @@
                 <form action="{% url 'index' %}" class="search-form" method="POST">
                     {% csrf_token %}
                     <div class="search-form-elements">
-                        <input class="search-box" type="text" name="query">
+                        <input class="search-box" type="text" name="query" autofocus>
                         <button class="submit-search" type="submit">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
                                 <circle cx="10" cy="10" r="7" stroke="black" stroke-width="2" fill="none"/>

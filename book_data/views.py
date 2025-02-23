@@ -19,14 +19,15 @@ def index(request):
     if request.method == "POST":
         query = request.POST.get('query')
 
-        books = main_fetch(query)
+        if query == '':
+            return redirect('index')
+        else:
+            books = main_fetch(query)
 
-        books = books[0:11]
+            books = books[0:21]
+            return render(request, "book_data/index.html", { 'books': books })
         
-
-        return render(request, "book_data/index.html", { 'books': books })
     return render(request, "book_data/index.html")
-
 
 @login_required
 def user_reading_list(request):
@@ -67,7 +68,7 @@ def add_reading_list(request):
 
     return redirect(book_view, bookID, coverKey)
 
-def book_view(request, book_id, cover_key):
+def book_view(request, book_id, cover_key=''):
     api_url = f'https://openlibrary.org/works/{book_id}.json'
 
     response = requests.get(api_url)
@@ -79,7 +80,9 @@ def book_view(request, book_id, cover_key):
     author_response = requests.get(author_api)
     author_full_name = author_response.json()
 
-    if cover_key and cover_key != 'null':
+    print(cover_key)
+
+    if cover_key and cover_key != '':
         cover_url = f'https://covers.openlibrary.org/b/olid/{cover_key}-M.jpg'
     else:
         cover_url = '/static/images/books.jpeg'
@@ -152,7 +155,7 @@ def write_review(request):
             review.save()
             
             # Optionally, redirect to a success page to prevent form re-submission
-            return redirect(fetch_book, bookID, coverKey)
+            return redirect(book_view, bookID, coverKey)
     else:
         form = ReviewsForm()
     return render(request, 'book_data/write_review.html', {'form': form})

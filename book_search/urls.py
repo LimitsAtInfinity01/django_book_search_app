@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from book_data.views import (index, login_view, 
                             register, logout_view,
                             book_view, write_review, 
@@ -31,5 +31,5 @@ urlpatterns = [
     path('write-review/', write_review, name='write_review'),
     path('add_reading_list/', add_reading_list, name='add_reading_list'),
     path('user_reading_list/', user_reading_list, name='user_reading_list'),
-    path('book_view/<str:book_id>/<str:cover_key>/', book_view, name='book_view')
+    re_path(r'^book_view/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', book_view, name='book_view')
 ]
