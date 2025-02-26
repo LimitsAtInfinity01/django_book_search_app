@@ -5,7 +5,7 @@ from .models import Reviews, Comments
 class ReviewsForm(forms.ModelForm):
     class Meta:
         model = Reviews
-        fields = ['title', 'content', 'rating']
+        fields = ['content', 'rating']
 
         widgets = {
             'rating': forms.NumberInput(attrs={'min': 0, 'max': 5})

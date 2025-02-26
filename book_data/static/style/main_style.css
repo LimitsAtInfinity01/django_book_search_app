@@ -5,7 +5,9 @@
 
 body {
     color: rgb(5, 5, 5);
-    background-color: #eac4c6cc;
+    /* background-color: #eac4c6cc; */
+    background-color: #ffffff;
+    
     /* background-color: #e3b4b7c6; */
 
     padding: 0;
@@ -96,3 +98,9 @@ ul.navbar-list {
     color: #9f4a09;
     font-size: 1.5rem;
 }
+
+.review-content {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+

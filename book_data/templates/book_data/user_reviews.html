@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'style/reading_list.css' %}">
+    <link rel="stylesheet" href="{% static 'style/reviews_page.css' %}">
 {% endblock %}
 
 
@@ -16,11 +16,18 @@
     {% if reviews %}
         
         {% for review in reviews %}
-            <form action="{% url 'delete_review_from_list' review.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Delete review</button>
-            </form>
-            <p>{{ review }}</p>
+
+            <div class="reviews-container">
+                <div class="review-container">
+                    <form action="{% url 'delete_review_from_list' review.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete review</button>
+                    </form>
+                    <p >{{ review.content }}</p>
+                </div>
+                <hr>
+            </div>
+
         {% endfor %}
 
     {% endif %}

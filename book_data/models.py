@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 class Reviews(models.Model):
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
     book_id = models.CharField(max_length=50)
-    title = models.CharField(max_length=50)
     content = models.TextField()
     rating = models.IntegerField()
     review_date = models.DateTimeField(auto_now_add=True)

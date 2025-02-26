@@ -198,7 +198,7 @@ def write_review(request):
         if form.is_valid():
 
             # Process the validated data
-            review_title = form.cleaned_data['title']
+            # review_title = form.cleaned_data['title']
             review_content = form.cleaned_data['content']
             review_rating = form.cleaned_data['rating']
 
@@ -206,7 +206,6 @@ def write_review(request):
 
             review = Reviews(reviewer = request.user,
                              book_id = bookID,
-                             title = review_title,
                              content = review_content,
                              rating = review_rating)
             review.save()

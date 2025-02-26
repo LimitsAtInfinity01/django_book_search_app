@@ -110,5 +110,41 @@
 } */
 
 .text-area {
-    min-height: 50px;
+    /* min-height: 50px; */
+    /* max-width: 85%; */
+    margin-left: 15%;
+    border-radius: 10px;
+    
+}
+
+.text-area::placeholder {
+    text-align: justify;
+
+    line-height: inherit;
+}
+
+.comments-heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.author-date-container {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-button {
+    
+    margin-left: 85%;
+}
+
+.commenter {
+    font-weight: bolder;
+    color: #176420;
+}
+
+.delete-comment {
+    margin: 10px;
 }

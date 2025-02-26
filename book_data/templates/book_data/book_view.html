@@ -147,43 +147,49 @@
                             {% if user.is_authenticated and user == review.reviewer %}
                                 <form action="{% url 'delete_review' review.id %}" method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Delete review</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Delete review</button>
                                 </form>
                             {% endif %}    
                         </div>
                         
 
                     </div>
-                    <p>{{ review.id }}</p>
-                    <p>{{ review.content }}</p>
+                    
+                    <p class="review-content">{{ review.content }}</p>
+
+                    <hr>
 
                     <h4>Comments</h4>
   
                     {% for comment in review.comments.all %}
-                        <p>{{ comment.author }}</p>
-                        <time datetime="">{{ comment.data_time }}</time>
-                       
-                       {% if user.is_authenticated and user == comment.author %} 
-                        <div >
-                                <form action="{% url 'delete_comment' comment.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Delete comment</button>
-                                </form>
-                        </div>
-                       {% endif %}
+                        <div class="comments-heading">
+                            <div class="author-date-container">
+                                <p class="commenter">{{ comment.author }}</p>
+                                <time datetime="">{{ comment.data_time }}</time>
+                            </div>
 
+                            {% if user.is_authenticated and user == comment.author %} 
+                                <div >
+                                    <form action="{% url 'delete_comment' comment.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete comment</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                            
                         <p>{{ comment }}</p>
                         <hr>
                     {% endfor %}
 
 
-                    <button class="comment-button">Comment</button>
+                    <!-- <button class="show-comments-button">Comment</button> -->
 
                     <div class="comment-div" >
                         <form action="{% url 'get_comment' review.id %}" class="comment-form" method="POST" >
                             {% csrf_token %}
-                            <textarea name="content" id="" class="text-area" ></textarea>
-                            <button type="submit"><span>Comment</span></button>
+                            <textarea name="content" id="" class="text-area" placeholder="Add to comment"></textarea>
+                            <button type="submit" class="btn btn-outline-dark btn-sm comment-button"><span>Comment</span></button>
                         </form>
                     </div>
 
