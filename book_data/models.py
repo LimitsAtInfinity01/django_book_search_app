@@ -22,9 +22,10 @@ class Reviews(models.Model):
 
 #TODO: Coments
 class Comments(models.Model):
+    reviews = models.ForeignKey(Reviews, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-    data_time = models.DateTimeField()
+    data_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content
@@ -39,6 +40,11 @@ class ReadingList(models.Model):
     title = models.CharField(max_length=50)
     book_id = models.CharField(max_length=50)
     cover_id = models.CharField(max_length=50)
+    
+    @property
+    def user_rating(self):
+        review = Reviews.objects.filter(user=self.user, book_id=self.book_id).first()
+        return review.rating if review else None
 
     def __str__(self):
         return f"{self.title} ({self.book_id})"

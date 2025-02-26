@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -28,6 +28,69 @@ def index(request):
             return render(request, "book_data/index.html", { 'books': books })
         
     return render(request, "book_data/index.html")
+
+def delete_review_from_list(request, review_id):
+    review = get_object_or_404(Reviews, id=review_id)
+    if request.user == review.reviewer:
+        if request.method == 'POST':
+            review.delete()
+            return redirect('user_reviews_page')
+
+
+
+@login_required
+def delete_review(request, review_id):
+    current_book_id = request.session.get('current_book_id')
+    current_cover_key = request.session.get('current_cover_key')
+
+    review = get_object_or_404(Reviews, id=review_id)
+    print(review_id)
+
+    if request.user == review.reviewer:
+        if request.method == 'POST':
+            review.delete()
+            return redirect('book_view', current_book_id, current_cover_key)
+
+    return redirect('book_view', current_book_id, current_cover_key)
+
+
+@login_required
+def get_comment(request, review_id):
+    
+    current_book_id = request.session.get('current_book_id')
+    current_cover_key = request.session.get('current_cover_key')
+
+    review = Reviews.objects.get(id=review_id)
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        print(content)
+        comment = Comments(reviews=review,
+                           author=request.user,
+                           content=content)
+        comment.save()
+
+        return redirect('book_view', current_book_id, current_cover_key) 
+
+@login_required
+def delete_comment(request, comment_id):
+    current_book_id = request.session.get('current_book_id')
+    current_cover_key = request.session.get('current_cover_key')
+    comment = get_object_or_404(Comments, id=comment_id)
+
+    if request.user == comment.author:
+        if request.method == 'POST':
+            comment.delete()
+            return redirect('book_view', current_book_id, current_cover_key)
+    else:
+        return redirect('login')
+
+def user_reviews_page(request):
+    reviews = Reviews.objects.filter(reviewer=request.user.id)
+
+    context = {
+        'reviews': reviews
+    }
+    return render(request, 'book_data/user_reviews.html', context)
 
 @login_required
 def user_reading_list(request):
@@ -61,12 +124,18 @@ def add_reading_list(request):
 
     if created:
         print(f'Book with {title} and {bookID} added')
-        messages.info(request, 'Book added to reading list!')
+        messages.success(request, 'Book added to reading list!')
     else:
+         messages.error(request, 'Book already in the list!')
          print(f'Book with {title} and {bookID} not added')
 
 
     return redirect(book_view, bookID, coverKey)
+
+def remove_from_reading_list(request, book_id):
+    book = get_object_or_404(ReadingList, book_id=book_id, user=request.user)
+    book.delete()
+    return redirect('user_reading_list')
 
 def book_view(request, book_id, cover_key=''):
     api_url = f'https://openlibrary.org/works/{book_id}.json'
@@ -79,8 +148,6 @@ def book_view(request, book_id, cover_key=''):
     
     author_response = requests.get(author_api)
     author_full_name = author_response.json()
-
-    print(cover_key)
 
     if cover_key and cover_key != '':
         cover_url = f'https://covers.openlibrary.org/b/olid/{cover_key}-M.jpg'
@@ -111,23 +178,13 @@ def book_view(request, book_id, cover_key=''):
 
     reviews = Reviews.objects.filter(book_id=book_id)
 
-    all_reviews = []
-    for item in reviews:
-        reviews_dict = {
-            'reviewer': item.reviewer.username,
-            'title': item.title,
-            'content': item.content,
-            'rating': item.rating,
-            'review_date': item.review_date
-        }
-
-        all_reviews.append(reviews_dict)
-
     context = {
         'book_details': book_details,
-        'reviews': all_reviews
+        'reviews': reviews,
     }
     
+    request.session['current_book_id'] = book_id
+    request.session['current_cover_key'] = cover_key
     return render(request, 'book_data/book_view.html', context)
 
 @login_required 

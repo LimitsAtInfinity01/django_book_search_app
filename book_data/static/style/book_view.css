@@ -90,3 +90,25 @@
     display: flex;
     justify-content: space-between;
 }
+
+.message {
+    max-width: 25%;
+    position: absolute;
+    left: 40%;
+    top: 0px;
+    min-width: 10%;
+}
+
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .comment-div {
+    display: none;
+} */
+
+.text-area {
+    min-height: 50px;
+}

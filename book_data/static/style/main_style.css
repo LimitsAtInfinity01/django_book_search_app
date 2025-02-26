@@ -69,3 +69,30 @@ ul.navbar-list {
     color: #7FD1B9;
 }
 
+.current-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 75%;
+    margin-top: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    height: auto;
+}
+
+.lists {
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome {
+    color: #0d683c;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.user-name {
+    color: #9f4a09;
+    font-size: 1.5rem;
+}

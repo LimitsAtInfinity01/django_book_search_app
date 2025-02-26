@@ -28,6 +28,19 @@
         </ul>
     </nav>
 
+
+    <div class="current-user">
+        {% if user.is_authenticated %}
+            <h3><span class="welcome">Welcome, </span><span class="user-name">{{ user.username }}</span></h3>
+                <div class="lists">
+                    <a class="reading-list" href="{% url 'user_reading_list' %}">My Readig List</a>
+                    <a class="reviews" href="{% url 'user_reviews_page' %}">My Reviews</a>
+                </div>
+        {% endif %}
+    </div>
+
+
+
     {% block content %}{% endblock %}
 
     {% block scripts %}{% endblock %}

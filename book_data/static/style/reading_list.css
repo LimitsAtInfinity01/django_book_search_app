@@ -1,7 +1,16 @@
 
 .list {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+   
+   max-width: 65%;
+   margin-left: auto;
+   margin-right: auto;
    margin-top: 75px; 
+}
+
+.cover {
+   width: 65px;
+}
+
+.table {
+   border: solid black 1px;
 }

@@ -52,11 +52,16 @@ body, ul {
     left: 12.5%;
 }
 
-.current-user a {
+.reading-list {
     position: fixed;
     right: 12.5%;
 }
 
+.reviews {
+    position: fixed;
+    right: 12.5%;
+    top: 100px;
+}
 
 .welcome {
     color: #0d683c;

@@ -1,0 +1,29 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+
+{% block title %}
+    User's reviews
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/reading_list.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    {% if reviews %}
+        
+        {% for review in reviews %}
+            <form action="{% url 'delete_review_from_list' review.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete review</button>
+            </form>
+            <p>{{ review }}</p>
+        {% endfor %}
+
+    {% endif %}
+
+
+{% endblock %}

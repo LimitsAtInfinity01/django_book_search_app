@@ -20,7 +20,11 @@ from django.urls import path, re_path
 from book_data.views import (index, login_view, 
                             register, logout_view,
                             book_view, write_review, 
-                            add_reading_list, user_reading_list)
+                            add_reading_list, user_reading_list,
+                            remove_from_reading_list,
+                            user_reviews_page, get_comment,
+                            delete_comment, delete_review,
+                            delete_review_from_list)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -30,6 +34,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('write-review/', write_review, name='write_review'),
     path('add_reading_list/', add_reading_list, name='add_reading_list'),
+    path('user_reviews_page/', user_reviews_page, name='user_reviews_page'),
     path('user_reading_list/', user_reading_list, name='user_reading_list'),
+    path('get_comment/<int:review_id>', get_comment, name='get_comment'),
+    path('delete_reviews_from_list/<int:review_id>', delete_review_from_list, name='delete_review_from_list'),
+    path('delete_comment/<int:comment_id>', delete_comment, name='delete_comment'),
+    path('delete_review/<int:review_id>', delete_review, name='delete_review'),
+    
+    path('remove/<str:book_id>', remove_from_reading_list, name='remove_from_reading_list'),
+   
     re_path(r'^book_view/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', book_view, name='book_view')
 ]
