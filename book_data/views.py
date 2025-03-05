@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -15,18 +16,11 @@ from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
 def index(request):
-    
-    if request.method == "POST":
-        query = request.POST.get('query')
-
-        if query == '':
-            return redirect('index')
-        else:
-            books = main_fetch(query)
-
-            books = books[0:21]
-            return render(request, "book_data/index.html", { 'books': books })
-        
+    query = request.GET.get('query')
+    if query:
+        books = main_fetch(query)
+        books = books[0:21]
+        return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
 
 def delete_review_from_list(request, review_id):
@@ -35,8 +29,6 @@ def delete_review_from_list(request, review_id):
         if request.method == 'POST':
             review.delete()
             return redirect('user_reviews_page')
-
-
 
 @login_required
 def delete_review(request, review_id):
@@ -52,7 +44,6 @@ def delete_review(request, review_id):
             return redirect('book_view', current_book_id, current_cover_key)
 
     return redirect('book_view', current_book_id, current_cover_key)
-
 
 @login_required
 def get_comment(request, review_id):
@@ -105,33 +96,34 @@ def user_reading_list(request):
 
         book = book_data_reading_list(book_id, cover_key)
         books.append(book)
-
+    print(books)
     return render(request, 'book_data/user_reading_list.html', { 'books': books })
 
 @login_required
-def add_reading_list(request):
-    book_details = request.session.get('book_details')  # Use as needed in your logic
-    bookID = book_details.get('book_id')
-    coverKey = book_details.get('cover_key')
-    title = book_details.get('title')
-
+def add_reading_list(request, book_id, cover_key=None):
+    book_details = request.session.get('book_details', {})  # Ensure a default empty dict
+    title = book_details.get('title', 'Unknown Title')
+    
     reading_list, created = ReadingList.objects.get_or_create(
-        user = request.user,
-        title = title,
-        book_id = bookID,
-        cover_id = coverKey
+        user=request.user,
+        title=title,
+        book_id=book_id,
+        cover_id=cover_key
     )
 
+    next_url = request.GET.get('next') or request.POST.get('next')
+
     if created:
-        print(f'Book with {title} and {bookID} added')
         messages.success(request, 'Book added to reading list!')
+        if next_url:
+            return redirect(next_url)
+        else:
+            return redirect(reverse('book_view', args=[book_id, cover_key]))
     else:
-         messages.error(request, 'Book already in the list!')
-         print(f'Book with {title} and {bookID} not added')
+        messages.error(request, 'Book already in the list!')
+        return redirect(reverse('book_view', args=[book_id, cover_key]))
 
-
-    return redirect(book_view, bookID, coverKey)
-
+  
 def remove_from_reading_list(request, book_id):
     book = get_object_or_404(ReadingList, book_id=book_id, user=request.user)
     book.delete()
@@ -192,6 +184,7 @@ def write_review(request):
     book_details = request.session.get('book_details')  # Use as needed in your logic
     bookID = book_details.get('book_id')
     coverKey = book_details.get('cover_key')
+    title = book_details.get('title')
 
     if request.method == 'POST':
         form = ReviewsForm(request.POST)
@@ -205,7 +198,9 @@ def write_review(request):
             # TODO: Save the review or perform other actions
 
             review = Reviews(reviewer = request.user,
+                             book_title=title,
                              book_id = bookID,
+                             cover_id = coverKey,
                              content = review_content,
                              rating = review_rating)
             review.save()

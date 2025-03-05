@@ -8,7 +8,9 @@ from django.contrib.auth.models import User
 #TODO: Reviews with ratings
 class Reviews(models.Model):
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
+    book_title = models.CharField(max_length=120)
     book_id = models.CharField(max_length=50)
+    cover_id = models.CharField(max_length=50)
     content = models.TextField()
     rating = models.IntegerField()
     review_date = models.DateTimeField(auto_now_add=True)
@@ -38,7 +40,7 @@ class ReadingList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     book_id = models.CharField(max_length=50)
-    cover_id = models.CharField(max_length=50)
+    cover_id = models.CharField(max_length=50, null=True, blank=True)
     
     @property
     def user_rating(self):

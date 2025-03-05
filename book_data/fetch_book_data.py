@@ -28,6 +28,7 @@ def main_fetch(search_term):
             "author_name": doc.get('author_name', 'N/A'),
             'cover_edition_key': cover_edition_key, 
             "cover_url": cover_url,
+            "cleaned_key": cleaned_key,
             "key": key,
             "first_publish_year": doc.get('first_publish_year', 'N/A'),
             "language": doc.get('language', 'N/A'),

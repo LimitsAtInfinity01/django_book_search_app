@@ -19,11 +19,19 @@
 
             <div class="reviews-container">
                 <div class="review-container">
-                    <form action="{% url 'delete_review_from_list' review.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Delete review</button>
-                    </form>
+                    <div class="review-heading">
+                        <div>
+                            <p>{{ review.reviewer }}</p>
+                            <a href="{% url 'book_view' review.book_id review.cover_id %}">{{ review.book_title }}</a>
+                        </div>
+                        
+                        <form action="{% url 'delete_review_from_list' review.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete review</button>
+                        </form>
+                    </div>
                     <p >{{ review.content }}</p>
+                    <a href="{% url 'book_view' review.book_id review.cover_id %}">Go to review</a>
                 </div>
                 <hr>
             </div>

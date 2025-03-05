@@ -1,16 +1,3 @@
-
-.book_container {
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    color: black;
-    padding-top: 50px;
-
-}
-
 .book-image {
     width: 125px;
     height: auto;
@@ -33,9 +20,19 @@
     justify-content: center;
 }
 
+.title-heading {
+    padding: 15px;
+}
+
 .book-title {
+    font-size: 18px;
     text-align: center;
     margin-bottom: 0;
+    padding-top: 10px;
+}
+
+.book-subtitle {
+    font-size: 16px;
 }
 
 .book-title a{
@@ -67,14 +64,14 @@ ul.book-languages li {
 
 .languages-heading {
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-align: center;
 }
 
 
 .book-image-container {
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .language-container {
@@ -89,20 +86,16 @@ ul.book-languages li {
 }
 
 .author-heading {
-    text-align: center;
-}
-
-.book-authors {
-    margin-top: 10px;
+    font-weight: 600;
     text-align: center;
 }
 
 .book-year {
     text-align: center;
+    margin: 15px;
 }
 
 .book-authors {
-    max-width: 50%;
     text-align: center;
 }
 
@@ -111,4 +104,8 @@ ul.book-languages li {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.reading-list-link {
+    margin-bottom: 15px;
 }

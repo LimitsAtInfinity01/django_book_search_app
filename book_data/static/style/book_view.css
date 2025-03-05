@@ -148,3 +148,11 @@
 .delete-comment {
     margin: 10px;
 }
+
+
+.bookmark-icon {
+    width: 1.2em;
+    height: 1.5em;
+    fill: #E07A5F; /* Change color */
+    stroke: black; /* Change border color */
+}

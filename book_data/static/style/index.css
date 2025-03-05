@@ -1,10 +1,9 @@
-
 * {
     box-sizing: border-box;
 }
 
 body {
-    color: white;
+    color: rgb(0, 0, 0);
     background-color: #ffffff;
     padding: 0;
     margin: 0;
@@ -17,6 +16,27 @@ body, ul {
 
 .main-content {
     margin-top: 50px;
+}
+
+/* .book_container {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: black;
+    padding-top: 50px;
+
+} */
+
+.book_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 75%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .navbar-list {
@@ -47,20 +67,43 @@ body, ul {
     height: auto;
 }
 
+.icons-container {
+    display: flex;
+    flex-direction: start;
+    align-items: center;
+    gap: 15px;
+}
+
+.reading-list-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.review-list-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .current-user h3 {
-    position: fixed;
-    left: 12.5%;
+    align-self: flex-start;
 }
 
-.reading-list {
-    position: fixed;
-    right: 12.5%;
+
+.bookmark-icon {
+    width: 3em;
+    height: 2em;
+    fill: #E07A5F; 
+    stroke: rgb(5, 5, 5); 
 }
 
-.reviews {
-    position: fixed;
-    right: 12.5%;
-    top: 100px;
+.review-icon {
+    width: 3em;
+    height: 2em;
+    fill: #000000; 
+    stroke: rgb(5, 5, 5); 
 }
 
 .welcome {
@@ -85,8 +128,6 @@ body, ul {
     color: #7FD1B9;
 }
 
-
-
 .container {
     max-width: 1024px;
     margin-left: auto;
@@ -110,7 +151,6 @@ body, ul {
     margin-right: 0;
     width: 200px;
     height: 22px;
-    /* border-radius: 5px; */
     padding: 0;
 }
 
@@ -128,8 +168,55 @@ body, ul {
 }
 
 
-
 .submit-search:hover {
     background-color: wheat;
     cursor: pointer;
 }
+
+.message {
+    max-width: 25%;
+    position: absolute;
+    left: 40%;
+    top: 0px;
+    min-width: 10%;
+}
+
+.bold-bullet {
+    font-weight: bold;
+}
+
+.page-description {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-left: 12.5%;
+    max-width: 75%;
+    margin-top: 35px;
+}
+
+
+.image {
+    width: 350px;
+    height: 500px;
+    background-size:cover ;
+    background-repeat: no-repeat;
+    flex-grow: 2;
+    border-radius: 15px;
+}
+
+.text-container {
+    max-width: 65%;
+    flex-grow: 1;
+}
+
+.list-description li {
+    list-style-position:inherit;
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+.bookish {
+    color: #e56399;
+    font-weight: 900;
+}
+

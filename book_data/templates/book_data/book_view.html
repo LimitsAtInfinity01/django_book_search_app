@@ -82,7 +82,25 @@
             <img class="cover-image" src="{{ book_details.cover }}" alt="" width="100px">
             <p>{{ book_details.author_name}}</p>
             <p>{{ book_details.first_publish_date }}</p>
-            <a href="{% url 'add_reading_list' %}">Add to reading list!</a>
+            <div>
+                <a href="{% url 'add_reading_list' book_details.book_id book_details.cover_key  %}?next={{ request.path|urlencode }}">Add to reading list!</a>
+
+                <svg
+                    class="bookmark-icon"
+                    viewBox="0 0 24 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M2 2 H22 V38 L12 30 L2 38 Z"
+                        fill=
+                        stroke=
+                        stroke-width="4"
+                    />
+                </svg>
+            
+            
+            </div>
+           
         </div>
         <div class="summary-reviews-container">
             <main class="book-summary">
