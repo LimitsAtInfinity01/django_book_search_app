@@ -18,17 +18,6 @@ body, ul {
     margin-top: 50px;
 }
 
-/* .book_container {
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    color: black;
-    padding-top: 50px;
-
-} */
 
 .book_container {
     display: grid;
@@ -55,42 +44,6 @@ body, ul {
     border-radius: 5px;
 }
 
- .current-user {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 75%;
-    margin-top: 5rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
-    height: auto;
-}
-
-.icons-container {
-    display: flex;
-    flex-direction: start;
-    align-items: center;
-    gap: 15px;
-}
-
-.reading-list-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-.review-list-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.current-user h3 {
-    align-self: flex-start;
-}
-
 
 .bookmark-icon {
     width: 3em;
@@ -99,12 +52,6 @@ body, ul {
     stroke: rgb(5, 5, 5); 
 }
 
-.review-icon {
-    width: 3em;
-    height: 2em;
-    fill: #000000; 
-    stroke: rgb(5, 5, 5); 
-}
 
 .welcome {
     color: #0d683c;
@@ -134,45 +81,6 @@ body, ul {
     margin-right: auto;
 }
 
-
-.search {
-    display: flex;
-    justify-content: center;
-    padding: 0;
-}
-
-.search-form-elements {
-    display: flex;
-    position: relative;
-    
-}
-
-.search-box {
-    margin-right: 0;
-    width: 200px;
-    height: 22px;
-    padding: 0;
-}
-
-
-.submit-search {
-    position: absolute;
-    right: 1px;
-    top: 1px;
-    bottom: 0px;
-    width: 24px;
-    height: 20px;
-    border: none;
-    background-color: white;
-    margin: 0;
-}
-
-
-.submit-search:hover {
-    background-color: wheat;
-    cursor: pointer;
-}
-
 .message {
     max-width: 25%;
     position: absolute;
@@ -186,28 +94,23 @@ body, ul {
 }
 
 .page-description {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    margin-left: 12.5%;
-    max-width: 75%;
-    margin-top: 35px;
+    display: grid;
+    grid-template-columns: 12.5% auto auto 12.5%;
+}
+
+.text-container {
+    grid-column: 2;
 }
 
 
 .image {
-    width: 350px;
-    height: 500px;
-    background-size:cover ;
-    background-repeat: no-repeat;
-    flex-grow: 2;
-    border-radius: 15px;
+    grid-column: 3;
+    background-size: cover;
+    background-position: center;
+    width: 500px;
 }
 
-.text-container {
-    max-width: 65%;
-    flex-grow: 1;
-}
+
 
 .list-description li {
     list-style-position:inherit;
