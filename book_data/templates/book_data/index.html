@@ -19,41 +19,6 @@
 
     <body>
 
-        <nav>
-            <ul class="navbar-list">
-                <li>
-
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 3H19C19.5523 3 20 3.44772 20 4V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44772 3 5 3Z" fill="#D2B48C"/>  <path d="M7 5H17V19H7V5Z" fill="#F5F5DC"/> <path d="M12 5L14 7L12 9L10 7L12 5Z" fill="#000"/> </svg>
-
-                </li>
-                <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
-                <div class="search">
-                    <form action="{% url 'index' %}" class="search-form" method="GET">
-                        {% csrf_token %}
-                        <div class="search-form-elements">
-                            <input class="search-box" type="text" name="query" autofocus>
-                            <button class="submit-search" type="submit">
-                                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
-                                    <circle cx="10" cy="10" r="7" stroke="black" stroke-width="2" fill="none"/>
-                                    <line x1="15" y1="15" x2="22" y2="22" stroke="black" stroke-width="2"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <li class="navbar-item"><a href="">Search</a></li>
-                <li class="navbar-item"><a href="">Reviews</a></li>
-                {% if user.is_authenticated %}
-                    <li class="navbar-item"><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                    <li class="navbar-item"><a href="{% url 'login' %}">Login</a></li>
-                    <li class="navbar-item"><a href="{% url 'register' %}">Register</a></li>
-                {% endif %}
-                <li class="navbar-item"><a href="">Profile</a></li>
-            </ul>
-        </nav>
-
         <div class="main-content">
             
             <div class="message">
@@ -139,7 +104,7 @@
         
                 </div>
 
-                <div class="image" style="background-image: url('{% static 'images/book4.jpg' %}');"></div>
+                <!-- <div class="image" style="background-image: url('{% static 'images/book4.jpg' %}');"></div> -->
 
             </div>
 

@@ -6,12 +6,14 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, user_logged_in
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.files.storage import FileSystemStorage
+from django.core.exceptions import ObjectDoesNotExist
 import json
 import requests
 
 
-from book_data.models import Reviews, Comments, ReadingList
-from book_data.forms import ReviewsForm, CommentsForm
+from book_data.models import Reviews, Comments, ReadingList, Avatar
+from book_data.forms import ReviewsForm, CommentsForm, ProfileUpload
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
@@ -22,6 +24,36 @@ def index(request):
         books = books[0:21]
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
+
+def user_profile_page(request):
+    profile_picture_form = ProfileUpload()
+
+    try:
+        avatar_url = Avatar.objects.filter(user=request.user.id).latest('created_at')
+    except ObjectDoesNotExist:
+        avatar_url = None
+
+    print(f'the avatar is: {avatar_url.avatar_url}')
+    context = {
+        'pic_form': profile_picture_form,
+        'avatar_url': avatar_url
+    }
+    return render(request, 'book_data/user_profile_page.html', context)
+
+@login_required
+def change_profile_picture(request):
+    if request.method == 'POST':
+        form = ProfileUpload(request.POST, request.FILES)
+        if form.is_valid():
+            avatar = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(f'avatars/{avatar.name}', avatar)
+            avatar_url = fs.url(filename)
+            avatar = Avatar(user=request.user,
+                               avatar_url=avatar_url)
+            avatar.save()
+            return render(request, 'book_data/user_profile_page.html', {'avatar_url': avatar_url})
+    return redirect('user_profile_page')
 
 def delete_review_from_list(request, review_id):
     review = get_object_or_404(Reviews, id=review_id)
@@ -77,11 +109,12 @@ def delete_comment(request, comment_id):
 
 def user_reviews_page(request):
     reviews = Reviews.objects.filter(reviewer=request.user.id)
-
     context = {
         'reviews': reviews
     }
+
     return render(request, 'book_data/user_reviews.html', context)
+
 
 @login_required
 def user_reading_list(request):

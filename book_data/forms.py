@@ -16,4 +16,7 @@ class CommentsForm(forms.ModelForm):
         model = Comments
         fields = ['content', 'author']
 
-
+class ProfileUpload(forms.Form):
+    file = forms.FileField()
+    
+    

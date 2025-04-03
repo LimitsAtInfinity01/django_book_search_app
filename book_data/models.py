@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-#TODO: Add users model
-
 
 #TODO: Reviews with ratings
 class Reviews(models.Model):
@@ -52,3 +49,11 @@ class ReadingList(models.Model):
     
     class Meta:
         db_table = "reading_list"
+
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    avatar_url = models.URLField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'avatar'

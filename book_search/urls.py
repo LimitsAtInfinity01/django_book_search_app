@@ -14,7 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path
 from book_data.views import (index, login_view, 
@@ -24,7 +25,9 @@ from book_data.views import (index, login_view,
                             remove_from_reading_list,
                             user_reviews_page, get_comment,
                             delete_comment, delete_review,
-                            delete_review_from_list)
+                            delete_review_from_list,
+                            user_profile_page,
+                            change_profile_picture)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -40,8 +43,8 @@ urlpatterns = [
     path('delete_reviews_from_list/<int:review_id>', delete_review_from_list, name='delete_review_from_list'),
     path('delete_comment/<int:comment_id>', delete_comment, name='delete_comment'),
     path('delete_review/<int:review_id>', delete_review, name='delete_review'),
-    
+    path('change_profile_picture', change_profile_picture, name='change_profile_picture'),
     path('remove/<str:book_id>', remove_from_reading_list, name='remove_from_reading_list'),
-   
+    path('user_profile_page', user_profile_page, name='user_profile_page'),
     re_path(r'^book_view/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', book_view, name='book_view')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

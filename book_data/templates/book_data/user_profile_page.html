@@ -1,0 +1,42 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+    
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/profile_page.css' %}">
+    <script src="{% static 'scripts/profile_scripts.js' %}"></script>
+    
+{% endblock %}
+
+
+{% block content %}
+    
+    <div class="grid-container">
+        <div class="profile-contianer">
+            {% if not avatar_url %}
+                <img src="{% static 'avatar.png' %}" alt="Profile Picture" width="100px" height="100px">
+            {% else %}
+                <img src="{{ avatar_url.avatar_url }}" alt="Profile Picture" width="100px" height="100px">
+            {% endif %}
+            
+            <form action="{% url 'change_profile_picture' %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{ pic_form.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        <div class="settings">settings</div>
+        <div class="biography">Biography</div>
+        <div class="followers">Followers</div>
+        <div class="reviews-number">Reviews Number</div>
+        <div class="reading-list">Reading List</div>
+        <div class="recent-reviews">Recent Reviews</div>
+    </div>
+
+    <script src=""></script>
+{% endblock %}

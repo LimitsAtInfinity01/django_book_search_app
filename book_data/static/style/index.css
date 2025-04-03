@@ -28,22 +28,6 @@ body, ul {
     margin-right: auto;
 }
 
-.navbar-list {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: #e07a5f;
-    height: 50px;
-    width: 75%; /* Controls the width */
-    position: fixed; /* Keeps it fixed */
-    top: 0.5rem; /* Distance from the top */
-    left: 50%; /* Moves the left edge to the center */
-    transform: translateX(-50%); /* Centers the navbar */
-    margin-bottom: 50px;
-    border-radius: 5px;
-}
-
 
 .bookmark-icon {
     width: 3em;
@@ -52,28 +36,6 @@ body, ul {
     stroke: rgb(5, 5, 5); 
 }
 
-
-.welcome {
-    color: #0d683c;
-    font-weight: 800;
-    font-size: 1.5rem;
-}
-
-.user-name {
-    color: #9f4a09;
-    font-size: 1.5rem;
-}
-
-.navbar-item a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-.navbar-item a:hover {
-    color: #7FD1B9;
-}
 
 .container {
     max-width: 1024px;
