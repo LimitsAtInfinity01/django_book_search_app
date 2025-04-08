@@ -2,7 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-#TODO: Reviews with ratings
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    avatar = models.ImageField(default='avatars/avatar.png', upload_to='avatars')
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.user.username
+    
+# Reviews with ratings
 class Reviews(models.Model):
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
     book_title = models.CharField(max_length=120)
@@ -15,7 +24,7 @@ class Reviews(models.Model):
     class Meta:
         db_table = "reviews"
 
-#TODO: Coments
+# Coments
 class Comments(models.Model):
     reviews = models.ForeignKey(Reviews, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -29,7 +38,7 @@ class Comments(models.Model):
         db_table = "comments"
 
 
-#TODO: Reading List Model
+# Reading List Model
 class ReadingList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
@@ -48,18 +57,3 @@ class ReadingList(models.Model):
     class Meta:
         db_table = "reading_list"
 
-class Avatar(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    avatar_url = models.URLField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        db_table = 'avatar'
-
-class Biography(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
-    create_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        db_table = 'biography'

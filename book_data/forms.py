@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reviews, Comments, Biography
+from .models import Reviews, Comments
 
 
 class ReviewsForm(forms.ModelForm):
@@ -15,8 +15,3 @@ class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['content', 'author']
-
-class BiographyForm(forms.ModelForm):
-    class Meta:
-        model = Biography
-        fields = ['text']  # Don't include 'user' if you plan to set it in the view

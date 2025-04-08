@@ -18,16 +18,12 @@
     
     <div class="grid-container">
         <div class="profile-contianer">
-            {% if not avatar_url %}
-                <img src="{% static 'avatar.png' %}" alt="Profile Picture" width="100px" height="100px" >
-            {% else %}
-                <div class="avatar-img-div">
-                    <img src="{{ avatar_url.avatar_url }}" alt="Profile Picture" width="100px" height="100px">
-                </div>
+
+            <div class="avatar-img-div">
+                
+            </div>
                
-            {% endif %}
-            
-            <form class="avatar-form" action="{% url 'change_profile_picture' %}" enctype="multipart/form-data" method="POST">
+            <form class="avatar-form" action='' enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 <label for="avatar_input" class="custom-label">Change picture</label>
                 <input type="file" name="avatar_picture" id="avatar_input">
@@ -37,12 +33,11 @@
         <div class="settings">
             <h4>Settings</h4>
             <ul>
-                <li><a href="{% url 'biography' %}">Add a biography!</a></li>
+                <li></li>
             </ul>
         </div>
         <div class="biography">
             <h4>About Me:</h4>
-            {{ current_biography.text }}
         </div>
         <div class="followers">
             <div>

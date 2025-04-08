@@ -12,8 +12,8 @@ import json
 import requests
 
 
-from book_data.models import Reviews, Comments, ReadingList, Avatar, Biography
-from book_data.forms import ReviewsForm, CommentsForm, BiographyForm #ProfileUpload
+from book_data.models import Reviews, Comments, ReadingList
+from book_data.forms import ReviewsForm, CommentsForm
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
@@ -26,17 +26,6 @@ def index(request):
     return render(request, "book_data/index.html")
 
 def user_profile_page(request):
-    # Get the avatar url from database
-    try:
-        avatar_url = Avatar.objects.filter(user=request.user.id).latest('created_at') 
-    except ObjectDoesNotExist:
-        avatar_url = None
-    
-    # Gets the current biography from database
-    try:
-        current_biography = Biography.objects.filter(user=request.user.id).latest('create_at') 
-    except ObjectDoesNotExist:
-        current_biography = None
 
     try: 
         reading_list = ReadingList.objects.filter(user=request.user)
@@ -52,46 +41,11 @@ def user_profile_page(request):
     for review in reviews:
         print(review.created_at)
     context = {
-        'avatar_url': avatar_url,
-        'current_biography': current_biography,
         'reading_list': reading_list,
         'reviews': reviews
     }
     return render(request, 'book_data/user_profile_page.html', context)
 
-@login_required
-def biography(request):
-    if request.method == 'POST':
-        form = BiographyForm(request.POST)
-        if form.is_valid():
-            text = form.cleaned_data['text']
-            biography = Biography(user=request.user,
-                                  text=text)
-            biography.save()
-            return redirect('user_profile_page')
-    else:
-        form = BiographyForm()
-
-    context = {
-        'form': form
-    }
-
-    return render(request, 'book_data/biography.html', context)
-
-@login_required
-def change_profile_picture(request):
-    if request.method == 'POST' and request.FILES.get('avatar_picture'):
-        uploaded_avatar = request.FILES['avatar_picture']
-        avatar = uploaded_avatar
-        fs = FileSystemStorage()
-        filename = fs.save(f'avatars/{avatar.name}', avatar)
-        avatar_url = fs.url(filename)
-
-        avatar = Avatar(user=request.user,
-                            avatar_url=avatar_url)
-        
-        avatar.save()
-        return redirect('user_profile_page')
 
 def delete_review_from_list(request, review_id):
     review = get_object_or_404(Reviews, id=review_id)
@@ -239,15 +193,10 @@ def book_view(request, book_id, cover_key=''):
 
     reviews = Reviews.objects.filter(book_id=book_id)
 
-    try:
-        avatar_url = Avatar.objects.filter(user=request.user.id).latest('created_at')
-    except ObjectDoesNotExist:
-        avatar_url = None
 
     context = {
         'book_details': book_details,
         'reviews': reviews,
-        'avatar_url': avatar_url
     }
     
     request.session['current_book_id'] = book_id
