@@ -156,3 +156,17 @@
     fill: #E07A5F; /* Change color */
     stroke: black; /* Change border color */
 }
+
+.avatar-img-div {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border-style: solid;
+    border-color: #e07a5f;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

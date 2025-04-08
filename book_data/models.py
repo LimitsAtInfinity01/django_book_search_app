@@ -10,11 +10,8 @@ class Reviews(models.Model):
     cover_id = models.CharField(max_length=50)
     content = models.TextField()
     rating = models.IntegerField()
-    review_date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.title
-    
     class Meta:
         db_table = "reviews"
 
@@ -39,6 +36,7 @@ class ReadingList(models.Model):
     book_id = models.CharField(max_length=50)
     cover_id = models.CharField(max_length=50, null=True, blank=True)
     
+    
     @property
     def user_rating(self):
         review = Reviews.objects.filter(user=self.user, book_id=self.book_id).first()
@@ -57,3 +55,11 @@ class Avatar(models.Model):
 
     class Meta:
         db_table = 'avatar'
+
+class Biography(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'biography'

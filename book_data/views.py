@@ -12,8 +12,8 @@ import json
 import requests
 
 
-from book_data.models import Reviews, Comments, ReadingList, Avatar
-from book_data.forms import ReviewsForm, CommentsForm, ProfileUpload
+from book_data.models import Reviews, Comments, ReadingList, Avatar, Biography
+from book_data.forms import ReviewsForm, CommentsForm, BiographyForm #ProfileUpload
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
@@ -21,39 +21,77 @@ def index(request):
     query = request.GET.get('query')
     if query:
         books = main_fetch(query)
-        books = books[0:21]
+        books = books[0:20]
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
 
 def user_profile_page(request):
-    profile_picture_form = ProfileUpload()
-
+    # Get the avatar url from database
     try:
-        avatar_url = Avatar.objects.filter(user=request.user.id).latest('created_at')
+        avatar_url = Avatar.objects.filter(user=request.user.id).latest('created_at') 
     except ObjectDoesNotExist:
         avatar_url = None
+    
+    # Gets the current biography from database
+    try:
+        current_biography = Biography.objects.filter(user=request.user.id).latest('create_at') 
+    except ObjectDoesNotExist:
+        current_biography = None
 
-    print(f'the avatar is: {avatar_url.avatar_url}')
+    try: 
+        reading_list = ReadingList.objects.filter(user=request.user)
+    except ObjectDoesNotExist:
+        reading_list = None
+
+    try:
+        reviews = Reviews.objects.filter(reviewer=request.user).order_by('-created_at')[:2]
+    except ObjectDoesNotExist:
+        reviews = None
+
+    print(reviews)    
+    for review in reviews:
+        print(review.created_at)
     context = {
-        'pic_form': profile_picture_form,
-        'avatar_url': avatar_url
+        'avatar_url': avatar_url,
+        'current_biography': current_biography,
+        'reading_list': reading_list,
+        'reviews': reviews
     }
     return render(request, 'book_data/user_profile_page.html', context)
 
 @login_required
-def change_profile_picture(request):
+def biography(request):
     if request.method == 'POST':
-        form = ProfileUpload(request.POST, request.FILES)
+        form = BiographyForm(request.POST)
         if form.is_valid():
-            avatar = request.FILES['file']
-            fs = FileSystemStorage()
-            filename = fs.save(f'avatars/{avatar.name}', avatar)
-            avatar_url = fs.url(filename)
-            avatar = Avatar(user=request.user,
-                               avatar_url=avatar_url)
-            avatar.save()
-            return render(request, 'book_data/user_profile_page.html', {'avatar_url': avatar_url})
-    return redirect('user_profile_page')
+            text = form.cleaned_data['text']
+            biography = Biography(user=request.user,
+                                  text=text)
+            biography.save()
+            return redirect('user_profile_page')
+    else:
+        form = BiographyForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'book_data/biography.html', context)
+
+@login_required
+def change_profile_picture(request):
+    if request.method == 'POST' and request.FILES.get('avatar_picture'):
+        uploaded_avatar = request.FILES['avatar_picture']
+        avatar = uploaded_avatar
+        fs = FileSystemStorage()
+        filename = fs.save(f'avatars/{avatar.name}', avatar)
+        avatar_url = fs.url(filename)
+
+        avatar = Avatar(user=request.user,
+                            avatar_url=avatar_url)
+        
+        avatar.save()
+        return redirect('user_profile_page')
 
 def delete_review_from_list(request, review_id):
     review = get_object_or_404(Reviews, id=review_id)
@@ -68,7 +106,7 @@ def delete_review(request, review_id):
     current_cover_key = request.session.get('current_cover_key')
 
     review = get_object_or_404(Reviews, id=review_id)
-    print(review_id)
+    
 
     if request.user == review.reviewer:
         if request.method == 'POST':
@@ -86,7 +124,6 @@ def get_comment(request, review_id):
     review = Reviews.objects.get(id=review_id)
     if request.method == 'POST':
         content = request.POST.get('content')
-        print(content)
         comment = Comments(reviews=review,
                            author=request.user,
                            content=content)
@@ -120,7 +157,7 @@ def user_reviews_page(request):
 def user_reading_list(request):
     user = request.user
     reading_list = ReadingList.objects.filter(user=user)
-
+    
     books = []
 
     for item in reading_list:
@@ -129,14 +166,13 @@ def user_reading_list(request):
 
         book = book_data_reading_list(book_id, cover_key)
         books.append(book)
-    print(books)
     return render(request, 'book_data/user_reading_list.html', { 'books': books })
 
 @login_required
 def add_reading_list(request, book_id, cover_key=None):
     book_details = request.session.get('book_details', {})  # Ensure a default empty dict
     title = book_details.get('title', 'Unknown Title')
-    
+    print(title)
     reading_list, created = ReadingList.objects.get_or_create(
         user=request.user,
         title=title,
@@ -203,9 +239,15 @@ def book_view(request, book_id, cover_key=''):
 
     reviews = Reviews.objects.filter(book_id=book_id)
 
+    try:
+        avatar_url = Avatar.objects.filter(user=request.user.id).latest('created_at')
+    except ObjectDoesNotExist:
+        avatar_url = None
+
     context = {
         'book_details': book_details,
         'reviews': reviews,
+        'avatar_url': avatar_url
     }
     
     request.session['current_book_id'] = book_id

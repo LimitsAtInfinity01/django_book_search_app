@@ -1,0 +1,28 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+    
+
+{% block title %}
+    Biography
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/bio.css' %}">
+    
+{% endblock %}
+
+{% block content %}
+
+    <div class="bio-form">
+        <form action="{% url 'biography' %}" method="POST">
+            {% csrf_token %}
+            <label for="id_text">Share something about you!</label>
+            <div id="label-textarea">
+                {{ form }}
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

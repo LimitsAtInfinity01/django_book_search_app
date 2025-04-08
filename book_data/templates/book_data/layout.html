@@ -32,16 +32,15 @@
             <li class="navbar-item"><a href="">Reviews</a></li>
             {% if user.is_authenticated %}
                 <li class="navbar-item"><a href="{% url 'logout' %}">Logout</a></li>
+                <li class="navbar-item"><a href="{% url 'user_profile_page' %}">Profile</a></li>
             {% else %}
                 <li class="navbar-item"><a href="{% url 'login' %}">Login</a></li>
                 <li class="navbar-item"><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
-            <li class="navbar-item"><a href="{% url 'user_profile_page' %}">Profile</a></li>
+
         </ul>
     </nav>
-
     
-
     <div class="current-user">
         {% if user.is_authenticated %}
             <h3><span class="welcome">Welcome, </span><span class="user-name">{{ user.username }}</span></h3>

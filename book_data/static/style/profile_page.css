@@ -1,9 +1,12 @@
+* {
+    box-sizing: border-box;
+}
 
 .grid-container {
-    outline: solid black;
+    
     display: grid;
     grid-template-columns: 250px 1fr;
-    grid-template-rows: repeat(5, 1fr) ;
+    /* grid-template-rows: repeat(5, 1fr) ; */
     grid-template-areas: 
         "pic biography"
         "settings followers"
@@ -14,12 +17,18 @@
     margin-right: 12.5%;
 }
 
-.profile-photo {
-    height: 100px;
+.avatar-img-div {
     width: 100px;
+    height: 100px;
     border-radius: 50%;
-    background-color: black;
-    display: inline-block;
+    overflow: hidden;
+    border-style: solid;
+    border-color: #e07a5f;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
 .profile-contianer {
@@ -27,6 +36,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-height: 200px;
+}
+
+.avatar-form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.biography {
+    max-height: 250px;
+}
+
+.followers {
+    min-height: 100px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .settings {
@@ -38,6 +64,37 @@
     background-color: red;
 }
 
-.grid-container > * {
+/* .grid-container > * {
     outline: 1px solid black;
+} */
+
+input[type='file']{
+    display: none;
 }
+
+.custom-label {
+    border: 1px solid #ccc;
+    border-radius: 7%;
+    display: inline-block;
+    padding: 2px 6px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 12px;
+  }
+
+.btn-size {
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+
+.review-list li {
+    display: inline-block;
+    border: black solid 1px;
+    border-radius: 10px;
+    background-color: #a2d2ff;
+    padding: 3px;
+    margin-left: 5px;
+}
+
+

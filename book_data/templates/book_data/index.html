@@ -158,7 +158,7 @@
                             </div>
                             <span hidden class='hidden-key'>{{ book.key }}</span>
                             <p class="book-year">Year published: {{ book.first_publish_year }} </p>
-                            <a class="reading-list-link" href="{% url 'add_reading_list' book.cleaned_key book.cover_edition_key %}?next={{ request.get_full_path|urlencode }}">Add to reading list!</a>
+                            <!-- <a class="reading-list-link" href="{% url 'add_reading_list' book.cleaned_key book.cover_edition_key %}?next={{ request.get_full_path|urlencode }}">Add to reading list!</a> -->
 
                         </div>
 

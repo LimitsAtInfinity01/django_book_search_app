@@ -27,7 +27,8 @@ from book_data.views import (index, login_view,
                             delete_comment, delete_review,
                             delete_review_from_list,
                             user_profile_page,
-                            change_profile_picture)
+                            change_profile_picture, 
+                            biography)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -37,6 +38,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('write-review/', write_review, name='write_review'),
     re_path(r'^add_reading_list/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', add_reading_list, name='add_reading_list'),
+    path('biography/', biography, name='biography'),
     path('user_reviews_page/', user_reviews_page, name='user_reviews_page'),
     path('user_reading_list/', user_reading_list, name='user_reading_list'),
     path('get_comment/<int:review_id>', get_comment, name='get_comment'),

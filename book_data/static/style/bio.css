@@ -1,0 +1,32 @@
+.bio-form {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#label-textarea {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    max-width: 100px;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+textarea {
+    height: 300px;
+}
+
+#label-textarea > div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#label-textarea label {
+    display: none;
+}

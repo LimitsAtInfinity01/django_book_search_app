@@ -153,7 +153,9 @@
             <section class="reviews">
                 <div class="user-info">
 
-                    <img src="{% static 'images/avatar.png' %}" class="avatar">
+                    <div class="avatar-img-div">
+                        <img src="{{ avatar_url.avatar_url }}" alt="Profile Picture" width="100px" height="100px">
+                    </div>
                     <p>{{ review.reviewer }}</p>
                 </div>
                 <div class="review">
