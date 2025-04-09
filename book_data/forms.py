@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reviews, Comments
+from .models import Reviews, Comments, Profile
 
 
 class ReviewsForm(forms.ModelForm):
@@ -15,3 +15,9 @@ class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['content', 'author']
+
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar']

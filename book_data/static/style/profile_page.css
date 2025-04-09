@@ -68,9 +68,9 @@
     outline: 1px solid black;
 } */
 
-input[type='file']{
+/* input[type='file']{
     display: none;
-}
+} */
 
 .custom-label {
     border: 1px solid #ccc;

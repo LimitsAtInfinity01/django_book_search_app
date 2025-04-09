@@ -12,8 +12,8 @@ import json
 import requests
 
 
-from book_data.models import Reviews, Comments, ReadingList
-from book_data.forms import ReviewsForm, CommentsForm
+from book_data.models import Reviews, Comments, ReadingList, Profile
+from book_data.forms import ReviewsForm, CommentsForm, AvatarForm
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
@@ -25,7 +25,20 @@ def index(request):
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
 
-def user_profile_page(request):
+def user_profile_page(request, user_id):
+
+    if request.method == 'POST':
+        avatar_form = AvatarForm(request.POST, request.FILES)
+        if avatar_form.is_valid():
+            profile = request.user.profile
+            profile.avatar = avatar_form.cleaned_data['avatar']
+            profile.save()
+            return redirect('user_profile_page')
+    else:
+        avatar_form = AvatarForm()
+
+    try:
+        avatar = request.user.profile
 
     try: 
         reading_list = ReadingList.objects.filter(user=request.user)
@@ -37,15 +50,17 @@ def user_profile_page(request):
     except ObjectDoesNotExist:
         reviews = None
 
-    print(reviews)    
-    for review in reviews:
-        print(review.created_at)
     context = {
         'reading_list': reading_list,
-        'reviews': reviews
+        'reviews': reviews,
+        'avatar_form': avatar_form
     }
     return render(request, 'book_data/user_profile_page.html', context)
 
+
+def change_avatar(request):
+    pass
+        
 
 def delete_review_from_list(request, review_id):
     review = get_object_or_404(Reviews, id=review_id)
@@ -126,7 +141,6 @@ def user_reading_list(request):
 def add_reading_list(request, book_id, cover_key=None):
     book_details = request.session.get('book_details', {})  # Ensure a default empty dict
     title = book_details.get('title', 'Unknown Title')
-    print(title)
     reading_list, created = ReadingList.objects.get_or_create(
         user=request.user,
         title=title,

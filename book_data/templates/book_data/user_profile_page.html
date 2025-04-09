@@ -23,11 +23,10 @@
                 
             </div>
                
-            <form class="avatar-form" action='' enctype="multipart/form-data" method="POST">
+            <form class="avatar-form" action='{% url "user_profile_page" user_id=user.id %}' enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <label for="avatar_input" class="custom-label">Change picture</label>
-                <input type="file" name="avatar_picture" id="avatar_input">
-                <button type="submit" class="btn btn-outline-primary btn-size">Submit</button>
+                {{ avatar_form.as_p }}
+                <button type="submit" class="btn btn-outline-primary btn-size">Upload an Image</button>
             </form>
         </div>
         <div class="settings">

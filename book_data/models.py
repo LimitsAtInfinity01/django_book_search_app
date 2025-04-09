@@ -10,7 +10,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+
+
 # Reviews with ratings
 class Reviews(models.Model):
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
