@@ -153,10 +153,14 @@
             <section class="reviews">
                 <div class="user-info">
 
-                    <div class="avatar-img-div">
-                        <img src="{{ avatar_url.avatar_url }}" alt="Profile Picture" width="100px" height="100px">
-                    </div>
-                    <p>{{ review.reviewer }}</p>
+                    {% for profile in profiles %}
+                        {% if profile.user == review.reviewer %}
+                        <div class="avatar-img-div">
+                            <img src="{{ profile.avatar.url }}" alt="Profile Picture" width="100px" height="100px">
+                        </div>
+                       <a href="{% url 'general_profile_page' user_id=profile.user.id %}"><p>{{ profile.user }}</p></a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="review">
                     <div class="title-date-container">

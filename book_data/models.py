@@ -57,4 +57,3 @@ class ReadingList(models.Model):
     
     class Meta:
         db_table = "reading_list"
-

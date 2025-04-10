@@ -26,8 +26,8 @@ from book_data.views import (index, login_view,
                             user_reviews_page, get_comment,
                             delete_comment, delete_review,
                             delete_review_from_list,
-                            user_profile_page,
-                            change_avatar)
+                            user_profile_page, general_profile_page,
+                            biography)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -37,7 +37,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('write-review/', write_review, name='write_review'),
     re_path(r'^add_reading_list/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', add_reading_list, name='add_reading_list'),
-    path('change_avatar', change_avatar, name='change_avatar'),
     path('user_reviews_page/', user_reviews_page, name='user_reviews_page'),
     path('user_reading_list/', user_reading_list, name='user_reading_list'),
     path('get_comment/<int:review_id>', get_comment, name='get_comment'),
@@ -46,7 +45,9 @@ urlpatterns = [
     path('delete_review/<int:review_id>', delete_review, name='delete_review'),
     path('remove/<str:book_id>', remove_from_reading_list, name='remove_from_reading_list'),
     path('user_profile_page/<int:user_id>', user_profile_page, name='user_profile_page'),
-    re_path(r'^book_view/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', book_view, name='book_view')
+    re_path(r'^book_view/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', book_view, name='book_view'),
+    path('general_profile_page/<int:user_id>', general_profile_page, name='general_profile_page'),
+    path('biography', biography, name='biography')
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

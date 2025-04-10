@@ -21,3 +21,8 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar']
+
+class BioForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio']

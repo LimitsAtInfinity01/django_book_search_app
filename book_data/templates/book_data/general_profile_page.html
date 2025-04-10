@@ -1,50 +1,35 @@
 {% extends 'book_data/layout.html' %}
 
 {% load static %}
-    
 
 {% block title %}
-    Register
+    Profile Page
 {% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'style/profile_page.css' %}">
     <script src="{% static 'scripts/profile_scripts.js' %}"></script>
-    
 {% endblock %}
-
-
 {% block content %}
-    
     <div class="grid-container">
         <div class="profile-contianer">
-
             <div class="avatar-img-div">
                 {% if avatar_url %}
                 <img src="{{ avatar_url }}" alt="Profile Avatar">
                 {% else %}
-                    <img src="/book_search/media/avatars/avatar.png" alt="Profile Avatar">     
+                    <img src="/book_search/media/avatars/avatar.png" alt="Profile Avatar">
                 {% endif %}
             </div>
-            
-
-            <form class="avatar-form" action='{% url "user_profile_page" user_id=user.id %}' enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                {{ avatar_form }}
-                <button type="submit" class="btn btn-outline-primary btn-size">Upload an Image</button>
-            </form>
-
-
         </div>
         <div class="settings">
-            <h4>Settings</h4>
+            <h4>Something-here</h4>
             <ul>
-                <li><a href="{% url 'biography' %}">Write a bio!</a></li>
+                <li></li>
             </ul>
         </div>
         <div class="biography">
             <h4>About Me:</h4>
-            <p>{{ bio }}</p>
+                {{ bio }}
         </div>
         <div class="followers">
             <div>

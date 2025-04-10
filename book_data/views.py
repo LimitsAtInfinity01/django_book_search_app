@@ -11,9 +11,9 @@ from django.core.exceptions import ObjectDoesNotExist
 import json
 import requests
 
-
+from django.contrib.auth.models import User
 from book_data.models import Reviews, Comments, ReadingList, Profile
-from book_data.forms import ReviewsForm, CommentsForm, AvatarForm
+from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
@@ -25,20 +25,46 @@ def index(request):
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
 
-def user_profile_page(request, user_id):
+def biography(request):
+    if request.method == 'POST':
+        form = BioForm(request.POST)
+        if form.is_valid():
+            profile = request.user.profile
+            profile.bio = form.cleaned_data['bio']
+            profile.save()
+            return redirect('user_profile_page', request.user.id )
+    else:
+        form = BioForm()
 
+    context = {
+        'form': form
+    }
+    return render(request, 'book_data/biography.html', context)
+
+def user_profile_page(request, user_id):
     if request.method == 'POST':
         avatar_form = AvatarForm(request.POST, request.FILES)
         if avatar_form.is_valid():
             profile = request.user.profile
             profile.avatar = avatar_form.cleaned_data['avatar']
             profile.save()
-            return redirect('user_profile_page')
+            return redirect('user_profile_page', user_id)
+        else:
+            return redirect('index')
     else:
         avatar_form = AvatarForm()
 
     try:
-        avatar = request.user.profile
+        profile = request.user.profile
+        avatar_url = profile.avatar.url
+    except ObjectDoesNotExist:
+        avatar_url = None        
+
+    try:
+        profile = request.user.profile
+        bio = profile.bio
+    except ObjectDoesNotExist:
+        bio = None
 
     try: 
         reading_list = ReadingList.objects.filter(user=request.user)
@@ -53,14 +79,47 @@ def user_profile_page(request, user_id):
     context = {
         'reading_list': reading_list,
         'reviews': reviews,
-        'avatar_form': avatar_form
+        'avatar_form': avatar_form,
+        'avatar_url': avatar_url,
+        'bio': bio
     }
+
     return render(request, 'book_data/user_profile_page.html', context)
 
+def general_profile_page(request, user_id):
 
-def change_avatar(request):
-    pass
-        
+    user = User.objects.get(id=user_id)
+    print(user)
+    try:
+        profile = user.profile
+        avatar_url = profile.avatar.url
+    except ObjectDoesNotExist:
+        avatar_url = None        
+
+    try:
+        profile = user.profile
+        bio = profile.bio
+    except ObjectDoesNotExist:
+        bio = None
+
+    try: 
+        reading_list = ReadingList.objects.filter(user=request.user)
+    except ObjectDoesNotExist:
+        reading_list = None
+
+    try:
+        reviews = Reviews.objects.filter(reviewer=request.user).order_by('-created_at')[:2]
+    except ObjectDoesNotExist:
+        reviews = None
+
+    context = {
+        'reading_list': reading_list,
+        'reviews': reviews,
+        'avatar_url': avatar_url,
+        'bio': bio
+    }
+
+    return render(request, 'book_data/general_profile_page.html', context)
 
 def delete_review_from_list(request, review_id):
     review = get_object_or_404(Reviews, id=review_id)
@@ -120,7 +179,6 @@ def user_reviews_page(request):
     }
 
     return render(request, 'book_data/user_reviews.html', context)
-
 
 @login_required
 def user_reading_list(request):
@@ -207,10 +265,20 @@ def book_view(request, book_id, cover_key=''):
 
     reviews = Reviews.objects.filter(book_id=book_id)
 
+    profiles = []
+    for review in reviews:
+        profile = review.reviewer.profile
+        profiles.append(profile)
+
+
+    for profile in profiles:
+            print(profile.user.id)
+
 
     context = {
         'book_details': book_details,
         'reviews': reviews,
+        'profiles': profiles
     }
     
     request.session['current_book_id'] = book_id
