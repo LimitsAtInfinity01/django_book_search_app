@@ -57,3 +57,12 @@ class ReadingList(models.Model):
     
     class Meta:
         db_table = "reading_list"
+
+class FavoriteBooks(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    book_id = models.CharField(max_length=50)
+    cover_id = models.CharField(max_length=50, null=True, blank=True)
+
+    class Meta:
+        db_table = 'favorite_books'

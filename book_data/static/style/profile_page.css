@@ -6,7 +6,7 @@
     
     display: grid;
     grid-template-columns: 250px 1fr;
-    /* grid-template-rows: repeat(5, 1fr) ; */
+    grid-template-rows: repeat(5, auto) ;
     grid-template-areas: 
         "pic biography"
         "settings followers"
@@ -36,7 +36,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+    max-height: 300px;
 }
 
 .avatar-form {
@@ -49,10 +49,7 @@
     gap: 1rem;
 }
 
-
-
 .biography {
-    max-height: 250px;
     padding: 2rem;
 }
 
@@ -60,6 +57,7 @@
     min-height: 100px;
     display: flex;
     justify-content: space-around;
+    margin-top: 1rem;
 }
 
 .settings {
@@ -98,9 +96,22 @@
     display: inline-block;
     border: black solid 1px;
     border-radius: 10px;
-    background-color: #a2d2ff;
-    padding: 3px;
+    background-color: #e07a5f;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     margin-left: 5px;
+    margin-top: 5px;
 }
 
-
+.reading-list li{
+    display: inline-block;
+    border: black solid 1px;
+    border-radius: 10px;
+    background-color: #bde0fe;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: 5px;
+    margin-top: 5px;
+}

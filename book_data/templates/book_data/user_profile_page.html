@@ -71,8 +71,8 @@
             </ul>
         </div>
         <div class="reading-list">
-            <h4>Reading List</h4>
-            <ul>
+            <h4>Reading Now</h4>
+            <ul class="reading-list">
                 {% for item in reading_list %}
                     <li>
                         {{ item.title }}
@@ -80,7 +80,9 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="recent-reviews">Recent Reviews</div>
+        <div class="recent-reviews">
+            <h4>Favorite Books</h4>
+        </div>
     </div>
 
     <script src=""></script>

@@ -11,9 +11,16 @@ from django.core.exceptions import ObjectDoesNotExist
 import json
 import requests
 
+# User model
 from django.contrib.auth.models import User
-from book_data.models import Reviews, Comments, ReadingList, Profile
+
+# Models
+from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBooks
+
+# Forms
 from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm
+
+# Fetch book data classes
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
 
 # Create your views here.
@@ -24,6 +31,32 @@ def index(request):
         books = books[0:20]
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
+
+def favorite_books(request, book_id, cover_key=None):
+    book_details = request.session.get('book_details', {})  # Ensure a default empty dict
+    title = book_details.get('title', 'Unknown Title')
+    favorites_books, created = FavoriteBooks.objects.get_or_create(
+        user=request.user,
+        title=title,
+        book_id=book_id,
+        cover_id=cover_key
+    )
+
+    next_url = request.GET.get('next') or request.POST.get('next')
+
+    if created:
+        messages.success(request, 'Book added to favorites!')
+        if next_url:
+            return redirect(next_url)
+        else:
+            return redirect(reverse('book_view', args=[book_id, cover_key]))
+    else:
+        messages.error(request, 'Book already in favorites!')
+        return redirect(reverse('book_view', args=[book_id, cover_key]))
+
+def favorite_books_list(request):
+    
+    return render(request, 'book_data/favorite_books.html')
 
 def biography(request):
     if request.method == 'POST':
@@ -72,7 +105,7 @@ def user_profile_page(request, user_id):
         reading_list = None
 
     try:
-        reviews = Reviews.objects.filter(reviewer=request.user).order_by('-created_at')[:2]
+        reviews = Reviews.objects.filter(reviewer=request.user).order_by('-created_at')[:10]
     except ObjectDoesNotExist:
         reviews = None
 
@@ -89,26 +122,25 @@ def user_profile_page(request, user_id):
 def general_profile_page(request, user_id):
 
     user = User.objects.get(id=user_id)
-    print(user)
+    profile = user.profile
+
     try:
-        profile = user.profile
         avatar_url = profile.avatar.url
     except ObjectDoesNotExist:
         avatar_url = None        
 
     try:
-        profile = user.profile
         bio = profile.bio
     except ObjectDoesNotExist:
         bio = None
 
     try: 
-        reading_list = ReadingList.objects.filter(user=request.user)
+        reading_list = ReadingList.objects.filter(user=profile.user)
     except ObjectDoesNotExist:
         reading_list = None
 
     try:
-        reviews = Reviews.objects.filter(reviewer=request.user).order_by('-created_at')[:2]
+        reviews = Reviews.objects.filter(reviewer=profile.user).order_by('-created_at')[:10]
     except ObjectDoesNotExist:
         reviews = None
 

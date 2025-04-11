@@ -83,9 +83,9 @@
             <p>{{ book_details.author_name}}</p>
             <p>{{ book_details.first_publish_date }}</p>
             <div>
-                <a href="{% url 'add_reading_list' book_details.book_id book_details.cover_key  %}?next={{ request.path|urlencode }}">Add to reading list!</a>
-
-                <svg
+                <p>                
+                    <a href="{% url 'add_reading_list' book_details.book_id book_details.cover_key  %}?next={{ request.path|urlencode }}">Add to your Reading List!</a>
+                    <svg
                     class="bookmark-icon"
                     viewBox="0 0 24 40"
                     xmlns="http://www.w3.org/2000/svg"
@@ -96,8 +96,11 @@
                         stroke=
                         stroke-width="4"
                     />
-                </svg>
-            
+                    </svg>
+                </p>
+                <p>
+                    <a href="{% url 'favorite_books' book_details.book_id book_details.cover_key  %}?next={{ request.path|urlencode }}">Add to your Favorite Books</a>
+                </p>
             
             </div>
            
