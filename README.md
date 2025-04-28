@@ -18,8 +18,14 @@ Bookih is a user-friendly application designed to help readers discover books ba
 This web application is written in python using the Django framework, HTML, CSS and JavaScript. It request metadata from the Open Library API `https://openlibrary.org/developers/api` about books, and other written records. Then dynamically process that data when the user makes searches and displays the results in a readable, friendly manner. 
 
 
-### Diagram (Optional)  
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zD6feUQRxkc" frameborder="0" allowfullscreen></iframe>
+## Demo Video
+
+<div align="center">
+
+  [![Watch the video](https://img.youtube.com/vi/zD6feUQRxkc/0.jpg)](https://youtu.be/zD6feUQRxkc)
+
+</div>
+
 
 
 ### Installation and Usage Instructions (For End-Users)  
