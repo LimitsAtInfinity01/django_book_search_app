@@ -3,7 +3,9 @@
 ## A Powerful Tool for Finding Your Next Read  
 
 ### Introduction  
-Bookih is a user-friendly application designed to help readers discover books based on their preferences. Whether you're searching for a specific title, author, or genre, this tool provides a seamless experience for book enthusiasts.  
+Bookih is a user-friendly application designed to help readers discover books based on their preferences. Whether you're searching for a specific title, author, or genre, this tool provides a seamless experience for book enthusiasts.
+
+This is a perfect application if you want to create private social medias for book clubs or book lovers. It's features such as following other readers, book reviews, comments, and profile pages makes it so you can interect with many readers and share your thought about many books.
 
 #### Features
 - Search for book information.
@@ -25,7 +27,6 @@ This web application is written in python using the Django framework, HTML, CSS 
   [![Watch the video](https://img.youtube.com/vi/zD6feUQRxkc/0.jpg)](https://youtu.be/zD6feUQRxkc)
 
 </div>
-
 
 
 ### Installation and Usage Instructions (For End-Users)  

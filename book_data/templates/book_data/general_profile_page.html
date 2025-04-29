@@ -20,6 +20,15 @@
                     <img src="/book_search/media/avatars/avatar.png" alt="Profile Avatar">
                 {% endif %}
             </div>
+            <div>
+                <form action="{% url 'follow' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="following_id" value="{{ user_id }}">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit">Follow</button>
+                </form>
+                <p>Profile User ID: {{ user_id }}</p>
+            </div>
         </div>
         <div class="settings">
             <h4>Something-here</h4>

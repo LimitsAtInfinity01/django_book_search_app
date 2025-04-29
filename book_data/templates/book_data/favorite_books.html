@@ -1,0 +1,50 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/reading_list.css' %}">
+{% endblock %}
+
+{% block title %}
+    Favorite Books
+{% endblock %}
+
+
+{% block content %}
+
+     <div class="list">
+
+        <table class="table">
+
+            <tr class="t-row">
+                <th class="th">Cover</th>
+                <th class="th">Title</th>
+                <th class="th">Author</th>
+                <th class="th">Rating</th>
+                <th></th>
+            </tr>
+
+            {% for book in books %}
+
+
+                <tr class="t-row">
+                    <td class="td"><img class="cover" src="{{ book.cover_id }}" alt="book cover">   </td>
+                    <td class="td"><a href="{% url 'book_view' book.book_id book.cover_key %}">{{ book.title  }}</a></td>
+                    <td class="td">{{ book.author_name }}</td>
+                    <td class="td">5</td>
+                    <td class="remove">
+                        <form action="{% url 'remove_from_reading_list' book.book_id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+{% endblock %}

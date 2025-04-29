@@ -29,7 +29,7 @@
 
 
                 <tr class="t-row">
-                    <td class="td"><img class="cover" src="{{ book.cover}}" alt="book cover"></td>
+                    <td class="td"><img class="cover" src="{{ book.cover }}" alt="book cover">{{ book.cover }}</td>
                     <td class="td"><a href="{% url 'book_view' book.book_id book.cover_key %}">{{ book.title  }}</a></td>
                     <td class="td">{{ book.author_name }}</td>
                     <td class="td">5</td>

@@ -43,6 +43,7 @@
             </ul>
         </div>
         <div class="biography">
+            <h1>{{ request.user }}</h1>
             <h4>About Me:</h4>
             <p>{{ bio }}</p>
         </div>
@@ -50,13 +51,21 @@
             <div>
                 <h5>Following</h5>
                 <ul>
-                    <li></li>
+                    {% for item in following %}
+                    <li>
+                        {{ item.following }}
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div>
                 <h5>Followers</h5>
                 <ul>
-                    <li></li>
+                    {% for item in follower %}
+                    <li>
+                        {{ item.follower }}
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

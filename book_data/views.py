@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ObjectDoesNotExist
+from django.templatetags.static import static 
 import json
 import requests
 
@@ -15,7 +16,7 @@ import requests
 from django.contrib.auth.models import User
 
 # Models
-from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBooks
+from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBooks, Following
 
 # Forms
 from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm
@@ -31,6 +32,20 @@ def index(request):
         books = books[0:20]
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
+
+@login_required
+def follow(request):
+    if request.method == 'POST':
+        follower = request.user
+        following_id = request.POST.get('following_id')
+        following = get_object_or_404(User, id=following_id)
+
+        if follower != following:
+            # Create relation only if it doesn't exist
+            Following.objects.get_or_create(follower=follower, following=following)
+
+        next_url = request.POST.get('next', '/')
+        return redirect(next_url)
 
 def favorite_books(request, book_id, cover_key=None):
     book_details = request.session.get('book_details', {})  # Ensure a default empty dict
@@ -55,8 +70,29 @@ def favorite_books(request, book_id, cover_key=None):
         return redirect(reverse('book_view', args=[book_id, cover_key]))
 
 def favorite_books_list(request):
+
+    try:
+        books = FavoriteBooks.objects.filter(user=request.user)
+    except ObjectDoesNotExist:
+        books = None
     
-    return render(request, 'book_data/favorite_books.html')
+    fav_books  = []
+    for i in range(len(books)):
+        dict_book = {}
+        dict_book['title'] = books[i].title
+        if books[i].cover_id is not None:
+            cover_url = f'https://covers.openlibrary.org/b/olid/{books[i].cover_id}.jpg'
+        else:
+            cover_url = static('/images/books.jpeg')
+        dict_book['cover_id'] = cover_url
+        dict_book['book_id'] = books[i].book_id
+        fav_books.append(dict_book)
+
+    context = {
+        'books': fav_books
+    }
+
+    return render(request, 'book_data/favorite_books.html', context)
 
 def biography(request):
     if request.method == 'POST':
@@ -109,12 +145,24 @@ def user_profile_page(request, user_id):
     except ObjectDoesNotExist:
         reviews = None
 
+    try:
+        following = Following.objects.filter(follower=request.user).order_by('-created_at')
+    except ObjectDoesNotExist:
+        following = None
+    
+    try:
+        followers = Following.objects.filter(following=request.user).order_by('-created_at')
+    except ObjectDoesNotExist:
+        followers = None
+
     context = {
         'reading_list': reading_list,
         'reviews': reviews,
         'avatar_form': avatar_form,
         'avatar_url': avatar_url,
-        'bio': bio
+        'bio': bio,
+        'following': following,
+        'follower': followers
     }
 
     return render(request, 'book_data/user_profile_page.html', context)
@@ -143,8 +191,11 @@ def general_profile_page(request, user_id):
         reviews = Reviews.objects.filter(reviewer=profile.user).order_by('-created_at')[:10]
     except ObjectDoesNotExist:
         reviews = None
+    
 
     context = {
+        'user': user,
+        'user_id': user_id,
         'reading_list': reading_list,
         'reviews': reviews,
         'avatar_url': avatar_url,

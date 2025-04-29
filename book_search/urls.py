@@ -27,7 +27,8 @@ from book_data.views import (index, login_view,
                             delete_comment, delete_review,
                             delete_review_from_list,
                             user_profile_page, general_profile_page,
-                            biography, favorite_books, favorite_books_list)
+                            biography, favorite_books, favorite_books_list,
+                            follow)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -49,7 +50,8 @@ urlpatterns = [
     path('general_profile_page/<int:user_id>', general_profile_page, name='general_profile_page'),
     re_path(r'^favorite_books/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', favorite_books, name='favorite_books'),
     path('biography', biography, name='biography'),
-    path('favorite_books_list', favorite_books_list, name='favorite_books_list')
+    path('favorite_books_list', favorite_books_list, name='favorite_books_list'),
+    path('follow', follow, name='follow')
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
