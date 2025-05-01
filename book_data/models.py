@@ -10,6 +10,30 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class TextPosts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+
+    class Meta:
+        db_table = 'text_posts'
+
+class VideoPosts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.FileField(upload_to='videos/')
+    description = models.CharField(max_length=512)
+
+    class Meta:
+        db_table = 'video_posts'
+
+class ImagePosts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')
+    description = models.CharField(max_length=512)
+
+    class Meta:
+        db_table = 'image_posts'
+
 class Following(models.Model):
     follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
     following = models.ForeignKey(User, related_name='followers', on_delete=models.CASCADE)
@@ -18,7 +42,6 @@ class Following(models.Model):
     class Meta:
         db_table = "following"
         unique_together = ('follower', 'following')
-
 
 # Reviews with ratings
 class Reviews(models.Model):
@@ -45,7 +68,6 @@ class Comments(models.Model):
     
     class Meta:
         db_table = "comments"
-
 
 # Reading List Model
 class ReadingList(models.Model):

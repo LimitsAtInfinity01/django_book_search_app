@@ -110,6 +110,7 @@ def biography(request):
     }
     return render(request, 'book_data/biography.html', context)
 
+@login_required
 def user_profile_page(request, user_id):
     if request.method == 'POST':
         avatar_form = AvatarForm(request.POST, request.FILES)
@@ -145,6 +146,11 @@ def user_profile_page(request, user_id):
     except ObjectDoesNotExist:
         reviews = None
 
+    try: 
+        favorite_books = FavoriteBooks.objects.filter(user=request.user)
+    except ObjectDoesNotExist:
+        favorite_books = None
+
     try:
         following = Following.objects.filter(follower=request.user).order_by('-created_at')
     except ObjectDoesNotExist:
@@ -155,14 +161,17 @@ def user_profile_page(request, user_id):
     except ObjectDoesNotExist:
         followers = None
 
+    print(favorite_books)
+
     context = {
         'reading_list': reading_list,
         'reviews': reviews,
+        'favorite_books': favorite_books,
         'avatar_form': avatar_form,
         'avatar_url': avatar_url,
         'bio': bio,
         'following': following,
-        'follower': followers
+        'followers': followers,
     }
 
     return render(request, 'book_data/user_profile_page.html', context)
@@ -191,15 +200,32 @@ def general_profile_page(request, user_id):
         reviews = Reviews.objects.filter(reviewer=profile.user).order_by('-created_at')[:10]
     except ObjectDoesNotExist:
         reviews = None
-    
 
+    try: 
+        favorite_books = FavoriteBooks.objects.filter(user=profile.user)
+    except ObjectDoesNotExist:
+        favorite_books = None
+
+    try:
+        following = Following.objects.filter(follower=profile.user).order_by('-created_at')
+    except ObjectDoesNotExist:
+        following = None
+    
+    try:
+        followers = Following.objects.filter(following=profile.user).order_by('-created_at')
+    except ObjectDoesNotExist:
+        followers = None
+    
     context = {
         'user': user,
         'user_id': user_id,
         'reading_list': reading_list,
         'reviews': reviews,
+        'favorite_books': favorite_books,
         'avatar_url': avatar_url,
-        'bio': bio
+        'bio': bio,
+        'following': following,
+        'followers': followers
     }
 
     return render(request, 'book_data/general_profile_page.html', context)
@@ -301,7 +327,6 @@ def add_reading_list(request, book_id, cover_key=None):
         messages.error(request, 'Book already in the list!')
         return redirect(reverse('book_view', args=[book_id, cover_key]))
 
-  
 def remove_from_reading_list(request, book_id):
     book = get_object_or_404(ReadingList, book_id=book_id, user=request.user)
     book.delete()
@@ -425,4 +450,3 @@ def register(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
-

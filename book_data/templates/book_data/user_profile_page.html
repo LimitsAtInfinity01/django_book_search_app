@@ -47,26 +47,28 @@
             <h4>About Me:</h4>
             <p>{{ bio }}</p>
         </div>
-        <div class="followers">
-            <div>
-                <h5>Following</h5>
-                <ul>
+        <div class="followers-container">
+            <div >
+                <h5>I am following: </h5>
+                <div class="following">
                     {% for item in following %}
-                    <li>
-                        {{ item.following }}
-                    </li>
+                        <a href="{% url 'general_profile_page' user_id=item.following.profile.id %}"></a>
+                            <div class="follower-avatar">
+                                    <img src="{{ item.follower.profile.avatar.url }}" alt="">
+                            </div>
+                        </a>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
             <div>
-                <h5>Followers</h5>
-                <ul>
-                    {% for item in follower %}
-                    <li>
-                        {{ item.follower }}
-                    </li>
-                    {% endfor %}
-                </ul>
+                <h5>Those who follow me:</h5>
+                
+                {% for item in followers %}
+                
+                    <a href="{% url 'general_profile_page' user_id=item.follower.profile.id %}"> {{ item.follower }}</a>
+                
+                {% endfor %}
+                
             </div>
         </div>
         <div class="reviews">
@@ -91,6 +93,13 @@
         </div>
         <div class="recent-reviews">
             <h4>Favorite Books</h4>
+            <ul>
+                {% for book in favorite_books %}
+                    <li>
+                        {{ book.title }}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 

@@ -53,7 +53,7 @@
     padding: 2rem;
 }
 
-.followers {
+.followers-container {
     min-height: 100px;
     display: flex;
     justify-content: space-around;
@@ -68,11 +68,6 @@
     outline: solid black;
     background-color: red;
 }
-
-/* .grid-container > * {
-    outline: 1px solid black;
-} */
-
 
 
 .custom-label {
@@ -90,7 +85,6 @@
     margin-bottom: 10px;
     width: 10rem;
 }
-
 
 .review-list li {
     display: inline-block;
@@ -114,4 +108,25 @@
     padding-right: 8px;
     margin-left: 5px;
     margin-top: 5px;
+}
+
+.follower-avatar {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: black solid 1px;
+
+    img {
+        width: 100%;
+        
+    }
+
+}
+
+
+.following {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0.2rem;
 }

@@ -80,36 +80,8 @@
             
             </div>
 
-            <div class="page-description">
-
-                <div class="text-container">
-                    <h1>Welcome to <span class="bookish">Bookish! {{ user.username }}</span></h1> 
-                    <h2>Your favorite place for all book things!</h2>
-                    <p>
-                        We're delighted to have you here. Our site is a community built for passionate readers like you. Whether you're looking to discover new titles, share your thoughts on your favorite books, or simply connect with fellow book lovers, you're in the right place.
-                    </p>
-        
-                    
-                    <h3>What Can You Do Here?</h3>
-                    
-                    <ul class="list-description">
-                        <li><span class="bold-bullet">Search for Books:</span> Dive into our extensive catalog using our intuitive search tool. Find books by title, author, or keyword and explore a wide selection of recommendations.</li>
-                        <li><span class="bold-bullet">Explore Book Details:</span> Get all the insights you need—read descriptions, view covers, and check out detailed information on each book.</li>
-                        <li><span class="bold-bullet">Write and Share Reviews:</span> Love a book? Let us know! Write reviews to share your opinions and help others decide on their next read.</li>
-                        <li><span class="bold-bullet">Join the Conversation:</span> Engage with our vibrant community by commenting on reviews and discussing your favorite reads.</li>
-                        <li><span class="bold-bullet">Manage Your Reading List:</span> Save books you’re interested in to your personal reading list. It’s a great way to keep track of what you want to read next.</li>
-                    </ul>
-                    <p>Getting started is easy—simply sign up or log in to access all these features and more. We’re here to make your reading journey enjoyable and engaging. Enjoy your stay and happy reading!</p>
-        
-                </div>
-
-                <!-- <div class="image" style="background-image: url('{% static 'images/book4.jpg' %}');"></div> -->
-
-            </div>
-
             <div class="book_container" >
 
-            
                 {% if books %}
 
                     {% for book in books %}
@@ -162,6 +134,33 @@
                         </div>
 
                     {% endfor %}
+
+                        {% else %}
+
+                        <div class="page-description">
+
+                            <div class="text-container">
+                                <h1>Welcome to <span class="bookish">Bookish! {{ user.username }}</span></h1> 
+                                <h2>Your favorite place for all book things!</h2>
+                                <p>
+                                    We're delighted to have you here. Our site is a community built for passionate readers like you. Whether you're looking to discover new titles, share your thoughts on your favorite books, or simply connect with fellow book lovers, you're in the right place.
+                                </p>
+                    
+                                
+                                <h3>What Can You Do Here?</h3>
+                                
+                                <ul class="list-description">
+                                    <li><span class="bold-bullet">Search for Books:</span> Dive into our extensive catalog using our intuitive search tool. Find books by title, author, or keyword and explore a wide selection of recommendations.</li>
+                                    <li><span class="bold-bullet">Explore Book Details:</span> Get all the insights you need—read descriptions, view covers, and check out detailed information on each book.</li>
+                                    <li><span class="bold-bullet">Write and Share Reviews:</span> Love a book? Let us know! Write reviews to share your opinions and help others decide on their next read.</li>
+                                    <li><span class="bold-bullet">Join the Conversation:</span> Engage with our vibrant community by commenting on reviews and discussing your favorite reads.</li>
+                                    <li><span class="bold-bullet">Manage Your Reading List:</span> Save books you’re interested in to your personal reading list. It’s a great way to keep track of what you want to read next.</li>
+                                </ul>
+                                <p>Getting started is easy—simply sign up or log in to access all these features and more. We’re here to make your reading journey enjoyable and engaging. Enjoy your stay and happy reading!</p>
+                    
+                            </div>
+            
+                        </div>
 
                 {% endif %}
             

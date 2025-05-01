@@ -37,20 +37,29 @@
             </ul>
         </div>
         <div class="biography">
+            <h1>{{ user }}</h1>
             <h4>About Me:</h4>
                 {{ bio }}
         </div>
         <div class="followers">
             <div>
-                <h5>Following</h5>
+                <h5>I am following: </h5>
                 <ul>
-                    <li></li>
+                    {% for item in following %}
+                    <li>
+                        <a href="{% url 'general_profile_page' user_id=item.following.profile.id %}">{{ item.following }}</a>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div>
-                <h5>Followers</h5>
+                <h5>Those who follow me:</h5>
                 <ul>
-                    <li></li>
+                    {% for item in followers %}
+                    <li>
+                       <a href="{% url 'general_profile_page' user_id=item.follower.profile.id %}"> {{ item.follower }}</a>
+                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -74,7 +83,16 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="recent-reviews">Recent Reviews</div>
+        <div class="recent-reviews">
+            <h4>Favorite Books</h4>
+            <ul>
+                {% for book in favorite_books %}
+                    <li>
+                        {{ book.title }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
     <script src=""></script>
