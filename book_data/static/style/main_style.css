@@ -119,6 +119,9 @@ ul.navbar-list {
     padding: 0;
 }
 
+.search-box:hover {
+    background-color: #e7e0de;
+}
 
 
 .submit-search {
@@ -164,20 +167,21 @@ ul.navbar-list {
     align-self: flex-start;
 }
 
-.list-container ul li {
+.list-container li {
     list-style: none;
 }
 
-.list-container ul li a {
+.list-container li a {
     text-decoration: none;    
     color: black;
     font-weight: 500;
     background-color: #7fd1b9;
     padding: 10px;
     border-radius: 5px;
+    margin: auto;   
 }
 
-.list-container ul {
+.list-container {
     display: flex;
     justify-content: space-evenly;
     gap: 1rem;
@@ -186,4 +190,31 @@ ul.navbar-list {
 .list-container ul li a:hover {
     background-color: #e07a5f;
     color: white;
+}
+
+.post-button form button {
+    all: unset;
+}
+
+.post-button {
+    text-decoration: none;    
+    color: black;
+    font-weight: 500;
+    background-color: #7fd1b9;
+    padding: 10px;
+    border-radius: 5px;
+    width: 110px;
+}
+
+.post-button:hover {
+    background-color: #e07a5f;
+    color: white;
+}
+
+.current-user span a {
+    all: unset;
+}
+
+.current-user span:hover {
+    cursor: pointer;
 }

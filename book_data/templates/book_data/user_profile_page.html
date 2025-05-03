@@ -52,23 +52,35 @@
                 <h5>I am following: </h5>
                 <div class="following">
                     {% for item in following %}
-                        <a href="{% url 'general_profile_page' user_id=item.following.profile.id %}"></a>
-                            <div class="follower-avatar">
-                                    <img src="{{ item.follower.profile.avatar.url }}" alt="">
+                        <a href="{% url 'general_profile_page' user_id=item.following.profile.id %}">
+                            <div class="individual-avatar">
+                                <div class="follower-avatar">
+                                    <img src="{{ item.following.profile.avatar.url }}" alt="">
+                                </div>
+                                <p>{{ item.following }}</p>
                             </div>
                         </a>
                     {% endfor %}
                 </div>
             </div>
             <div>
-                <h5>Those who follow me:</h5>
-                
-                {% for item in followers %}
-                
-                    <a href="{% url 'general_profile_page' user_id=item.follower.profile.id %}"> {{ item.follower }}</a>
-                
-                {% endfor %}
-                
+            
+                <div >
+                    <h5>Those who follow me: </h5>
+                    <div class="following">
+                        {% for item in followers %}
+                            <a href="{% url 'general_profile_page' user_id=item.follower.profile.id %}">
+                                <div class="individual-avatar">
+                                    <div class="follower-avatar">
+                                        <img src="{{ item.follower.profile.avatar.url }}" alt="">
+                                    </div>
+                                    <p>{{ item.follower }}</p>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="reviews">

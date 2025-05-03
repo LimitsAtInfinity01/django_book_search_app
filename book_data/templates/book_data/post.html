@@ -1,0 +1,49 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/reading_list.css' %}">
+{% endblock %}
+
+{% block title %}
+    Post
+{% endblock %}
+
+{% block content %}
+    <main class="main-container">
+        <h1>Make a post</h1>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ image_form }}
+            
+            <button name="form_type" value="image_form">Submit</button>
+        </form>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ video_form }}
+            <button name="form_type", value="video_form">Submit</button>
+        </form>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ text_form }}
+            <button name="form_type" value="text_form">Submit</button>
+        </form>
+
+
+    </main>
+    
+{% endblock %}

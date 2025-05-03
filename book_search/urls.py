@@ -28,8 +28,9 @@ from book_data.views import (index, login_view,
                             delete_review_from_list,
                             user_profile_page, general_profile_page,
                             biography, favorite_books, favorite_books_list,
-                            follow)
+                            follow, make_post, render_recent_posts)
 
+# path(url, view, name to reference it)
 urlpatterns = [
     path('', index, name='index'),
     path('login/', login_view, name="login"),
@@ -51,7 +52,9 @@ urlpatterns = [
     re_path(r'^favorite_books/(?P<book_id>[^/]+)/(?P<cover_key>[^/]+)?/$', favorite_books, name='favorite_books'),
     path('biography', biography, name='biography'),
     path('favorite_books_list', favorite_books_list, name='favorite_books_list'),
-    path('follow', follow, name='follow')
+    path('follow', follow, name='follow'),
+    path('make_post', make_post, name='make_post'),
+    path('recent_posts', render_recent_posts, name='recent_posts')
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

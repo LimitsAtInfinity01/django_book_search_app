@@ -34,7 +34,7 @@
                     <td class="td">{{ book.author_name }}</td>
                     <td class="td">5</td>
                     <td class="remove">
-                        <form action="{% url 'remove_from_reading_list' book.book_id %}" method="POST">
+                        <form action="#" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger">Remove</button>
                         </form>

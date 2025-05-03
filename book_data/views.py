@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBooks, Following
 
 # Forms
-from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm
+from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm, ImagePostForm, VideoPostForm, TextPostForm
 
 # Fetch book data classes
 from book_data.fetch_book_data import book_data_reading_list, main_fetch
@@ -32,6 +32,47 @@ def index(request):
         books = books[0:20]
         return render(request, "book_data/index.html", {'books': books})
     return render(request, "book_data/index.html")
+
+
+def render_recent_posts(request):
+
+    
+
+    return render(request, 'book_data/recent_posts.html')
+
+def make_post(request):
+
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'image_form':
+            form = ImagePostForm(request.POST, request.FILES)
+
+        elif form_type == 'video_form':
+            form = VideoPostForm(request.POST, request.FILES)
+
+        else:
+            form = TextPostForm(request.POST, request.FILES)
+
+        if form and form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            print('Form Posted Correctly')
+            return redirect('index')
+
+    else:
+        image_form = ImagePostForm()
+        video_form = VideoPostForm()
+        text_form = TextPostForm()
+
+    context = {
+        'image_form': image_form,
+        'video_form': video_form,
+        'text_form': text_form
+    }
+
+    return render(request, 'book_data/post.html', context)
 
 @login_required
 def follow(request):

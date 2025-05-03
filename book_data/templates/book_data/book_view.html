@@ -209,9 +209,6 @@
                         <hr>
                     {% endfor %}
 
-
-                    <!-- <button class="show-comments-button">Comment</button> -->
-
                     <div class="comment-div" >
                         <form action="{% url 'get_comment' review.id %}" class="comment-form" method="POST" >
                             {% csrf_token %}

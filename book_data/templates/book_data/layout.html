@@ -29,6 +29,7 @@
                     </div>
                 </form>
             </li>
+            <li class="navbar-item"><a href="{% url 'recent_posts' %}">Posts</a></li>
             <li class="navbar-item"><a href="">Reviews</a></li>
             {% if user.is_authenticated %}
                 <li class="navbar-item"><a href="{% url 'logout' %}">Logout</a></li>
@@ -43,9 +44,12 @@
     
     <div class="current-user">
         {% if user.is_authenticated %}
-            <span></span>
-            <div class="list-container">
-                <ul>
+            
+                <span class="post-button">
+                    <a href="{% url 'make_post' %}">Make a post</a>
+                </span>
+                
+                <ul class="list-container">
                     <li>
                         <a class="reading-list" href="{% url 'user_reading_list' %}">My Readig List</a>
                     </li>
@@ -56,12 +60,12 @@
                         <a href="{% url 'favorite_books_list' %}">My Favortie Books</a>  
                     </li>
                 </ul>
-            </div>    
+                
         {% endif %}
     </div>
 
 
-
+    <br>
     {% block content %}{% endblock %}
 
     {% block scripts %}{% endblock %}

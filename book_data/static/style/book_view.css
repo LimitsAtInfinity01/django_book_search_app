@@ -1,6 +1,11 @@
 
+* {
+    box-sizing: border-box;
+}
+
+
 .container {
-    margin-top: 100px;
+    margin-top: 150px;
     display: flex;
     width: 75%;
     margin-left: auto;

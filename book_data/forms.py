@@ -1,5 +1,5 @@
 from django import forms
-from .models import Reviews, Comments, Profile
+from .models import Reviews, Comments, Profile, TextPosts, VideoPosts, ImagePosts
 
 
 class ReviewsForm(forms.ModelForm):
@@ -26,3 +26,19 @@ class BioForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio']
+
+
+class ImagePostForm(forms.ModelForm):
+    class Meta:
+        model = ImagePosts
+        fields = ['image', 'description']
+
+class VideoPostForm(forms.ModelForm):
+    class Meta:
+        model = VideoPosts
+        fields = ['video', 'description']
+
+class TextPostForm(forms.ModelForm):
+    class Meta:
+        model = TextPosts
+        fields = ['text']

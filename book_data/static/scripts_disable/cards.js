@@ -61,7 +61,6 @@ export class BookCard {
         return card;
     }
     
-    
 
     // ✅ New method: Add a class to a selected element within the card
     addClassToElement(elementSelector, className) {
