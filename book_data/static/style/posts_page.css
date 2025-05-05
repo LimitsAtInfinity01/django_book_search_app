@@ -1,0 +1,90 @@
+
+* {
+    box-sizing: border-box;
+}
+
+#main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 30% 1fr 1fr;
+    max-width: 100%;
+    padding: 1rem;
+}
+
+.card {
+    grid-column: 3 / 4;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+}
+
+.image-post {
+    width: 100%;
+    height: auto;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+}
+
+.video-post {
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+header {
+    width: 100%;
+    height: auto;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    background-color: #f2cc8f;
+    margin-top: 0px;
+}
+
+.user div {
+    display: inline-flex;
+    align-items: end;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    
+}
+
+.user img {
+    margin-left: 0.5rem;
+}
+
+.user p {
+    margin-right: 0.5rem;
+}
+
+.line {
+    width: 100%;
+    border-top: 2px solid black;
+
+}
+
+.description p {
+    margin: 1rem;
+}
+
+.text-post {
+    margin: 1rem;
+}

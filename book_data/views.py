@@ -12,11 +12,15 @@ from django.templatetags.static import static
 import json
 import requests
 
+from itertools import chain
+from operator import attrgetter
+
+
 # User model
 from django.contrib.auth.models import User
 
 # Models
-from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBooks, Following
+from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBooks, Following, TextPosts, ImagePosts, VideoPosts
 
 # Forms
 from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm, ImagePostForm, VideoPostForm, TextPostForm
@@ -36,9 +40,31 @@ def index(request):
 
 def render_recent_posts(request):
 
-    
+    try:
+        image_posts = ImagePosts.objects.all().order_by('-created_at')
+    except ObjectDoesNotExist:
+        image_posts = None
 
-    return render(request, 'book_data/recent_posts.html')
+    try:
+        video_posts = VideoPosts.objects.all().order_by('-created_at')
+    except ObjectDoesNotExist:
+        video_posts = None
+
+    try:
+        text_posts = TextPosts.objects.all().order_by('-created_at')
+    except ObjectDoesNotExist:
+        text_posts = None
+
+
+    all_posts = list(chain(image_posts, video_posts, text_posts))
+
+    all_posts_sorted = sorted(all_posts, key=attrgetter('created_at'), reverse=True)
+
+    context = {
+        'posts': all_posts_sorted
+    }
+
+    return render(request, 'book_data/recent_posts.html', context)
 
 def make_post(request):
 
@@ -56,10 +82,10 @@ def make_post(request):
 
         if form and form.is_valid():
             post = form.save(commit=False)
+            post.post_type = form_type
             post.user = request.user
             post.save()
-            print('Form Posted Correctly')
-            return redirect('index')
+            return redirect('recent_posts')
 
     else:
         image_form = ImagePostForm()

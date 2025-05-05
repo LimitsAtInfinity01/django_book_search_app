@@ -12,7 +12,7 @@
 </head>
 <body>
     
-    <nav>
+    <nav id="main-navbar">
         <ul class="navbar-list">
             <li class="navbar-item"><a href="{% url 'index' %}">Home</a></li>
             <li class="navbar-item">
@@ -44,10 +44,12 @@
     
     <div class="current-user">
         {% if user.is_authenticated %}
-            
-                <span class="post-button">
-                    <a href="{% url 'make_post' %}">Make a post</a>
-                </span>
+
+                <a id="post-button-link" href="{% url 'make_post' %}">
+                    <span class="post-button">
+                        Make a post
+                    </span>
+                </a>
                 
                 <ul class="list-container">
                     <li>

@@ -10,6 +10,11 @@ body {
     margin: 0;
 }
 
+#main-navbar {
+    position: relative;
+    z-index: 5;
+}
+
 ul.navbar-list {
     margin-top: 0;
 }
@@ -192,7 +197,7 @@ ul.navbar-list {
     color: white;
 }
 
-.post-button form button {
+#post-button-link {
     all: unset;
 }
 

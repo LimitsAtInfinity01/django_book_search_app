@@ -10,35 +10,30 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-
-class TextPosts(models.Model):
+class BasePost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
-    type = models.CharField(max_length=16)
+    description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    post_type = models.CharField(max_length=32)
 
+    class Meta:
+        abstract = True
+
+class TextPosts(BasePost):
+    text = models.TextField()
     class Meta:
         db_table = 'text_posts'
 
-class VideoPosts(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    video = models.FileField(upload_to='videos/')
-    description = models.CharField(max_length=512)
-    type = models.CharField(max_length=16)
-    created_at = models.DateTimeField(auto_now_add=True)
+class ImagePosts(BasePost):
+    image = models.ImageField(upload_to='images/')
+    class Meta:
+        db_table = 'image_posts'
 
+class VideoPosts(BasePost):
+    video = models.FileField(upload_to='videos/')
     class Meta:
         db_table = 'video_posts'
 
-class ImagePosts(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')
-    description = models.CharField(max_length=512)
-    type = models.CharField(max_length=16)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        db_table = 'image_posts'
 
 class Following(models.Model):
     follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
