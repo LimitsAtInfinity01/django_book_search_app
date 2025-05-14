@@ -13,107 +13,78 @@
     
 {% endblock %}
 
+{% block post_buttons %}
+    <div></div>
+{% endblock %}
 
 {% block content %}
-    
-    <div class="grid-container">
-        <div class="profile-contianer">
+    <main id="mn-container">
 
-            <div class="avatar-img-div">
-                {% if avatar_url %}
-                <img src="{{ avatar_url }}" alt="Profile Avatar">
-                {% else %}
-                    <img src="/book_search/media/avatars/avatar.png" alt="Profile Avatar">     
-                {% endif %}
-            </div>
+        <section id="personal-container">
+           <div class="inner-container">
+
             
-
-            <form class="avatar-form" action='{% url "user_profile_page" user_id=user.id %}' enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                {{ avatar_form }}
-                <button type="submit" class="btn btn-outline-primary btn-size">Upload an Image</button>
-            </form>
-
-
-        </div>
-        <div class="settings">
-            <h4>Settings</h4>
-            <ul>
-                <li><a href="{% url 'biography' %}">Write a bio!</a></li>
-            </ul>
-        </div>
-        <div class="biography">
-            <h1>{{ request.user }}</h1>
-            <h4>About Me:</h4>
-            <p>{{ bio }}</p>
-        </div>
-        <div class="followers-container">
-            <div >
-                <h5>I am following: </h5>
-                <div class="following">
-                    {% for item in following %}
-                        <a href="{% url 'general_profile_page' user_id=item.following.profile.id %}">
-                            <div class="individual-avatar">
-                                <div class="follower-avatar">
-                                    <img src="{{ item.following.profile.avatar.url }}" alt="">
-                                </div>
-                                <p>{{ item.following }}</p>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
+            <div id="avatar-container" class="shared-attributes "></div>
+            <div id="name-title-container" class="shared-attributes">
+                <p>Firs name, Last name</p>
+                <p>title: my title here</p>
             </div>
-            <div>
-            
-                <div >
-                    <h5>Those who follow me: </h5>
-                    <div class="following">
-                        {% for item in followers %}
-                            <a href="{% url 'general_profile_page' user_id=item.follower.profile.id %}">
-                                <div class="individual-avatar">
-                                    <div class="follower-avatar">
-                                        <img src="{{ item.follower.profile.avatar.url }}" alt="">
-                                    </div>
-                                    <p>{{ item.follower }}</p>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
 
+
+            <div id="bio-container" class="shared-attributes">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                   Quaerat quisquam ad facilis excepturi, eaque qui voluptate 
+                   voluptas dolor praesentium est ducimus tempora quia voluptates 
+                   voluptatibus consectetur molestiae natus, ab aperiam.
+                   Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                   Quaerat quisquam ad facilis excepturi, eaque qui voluptate 
+                   voluptas dolor praesentium est ducimus tempora quia voluptates 
+                   voluptatibus consectetur molestiae natus, ab aperiam.
+                </p>
             </div>
-        </div>
-        <div class="reviews">
-            <h4>Recent Reviewed</h4>
-            <ul class="review-list">
-                {% for review in reviews %}
-                    <li>
-                        {{ review.book_title }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="reading-list">
-            <h4>Reading Now</h4>
-            <ul class="reading-list">
-                {% for item in reading_list %}
-                    <li>
-                        {{ item.title }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="recent-reviews">
-            <h4>Favorite Books</h4>
-            <ul>
-                {% for book in favorite_books %}
-                    <li>
-                        {{ book.title }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
 
-    <script src=""></script>
+
+            <div id="personal-info-list" class="shared-attributes ">
+                <ul>
+                    <li>Age: 99</li>
+                    <li>Status: Reading</li>
+                    <li>Location: Planet Earth</li>
+                </ul>
+                <ul>
+                    <li>Alpha</li>
+                    <li>Bravo</li>
+                    <li>Charlie</li>
+                    <li>Delta</li>
+                    <li>Echo</li>
+                </ul>
+            </div>
+
+           </div>
+        </section>
+
+
+
+        <section id="lists-container">
+
+        </section>
+
+
+
+        <section id="misc-container">
+
+        </section>
+
+
+
+
+    </main>
+
+
+
+
+    <!-- <script>
+        setTimeout(function() {
+            window.location.reload();
+        }, 10000); // Refresh every 10 seconds (10000 milliseconds)
+    </script> -->
 {% endblock %}

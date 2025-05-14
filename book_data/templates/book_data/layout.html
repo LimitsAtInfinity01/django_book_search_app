@@ -1,3 +1,5 @@
+<!-- layoyt.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +32,7 @@
                 </form>
             </li>
             <li class="navbar-item"><a href="{% url 'recent_posts' %}">Posts</a></li>
-            <li class="navbar-item"><a href="">Reviews</a></li>
+            <li class="navbar-item"><a href="{% url 'reviews_page' %}">Reviews</a></li>
             {% if user.is_authenticated %}
                 <li class="navbar-item"><a href="{% url 'logout' %}">Logout</a></li>
                 <li class="navbar-item"><a href="{% url 'user_profile_page' user_id=user.id %}">Profile</a></li>
@@ -44,13 +46,32 @@
     
     <div class="current-user">
         {% if user.is_authenticated %}
+                {% block post_buttons %}
 
-                <a id="post-button-link" href="{% url 'make_post' %}">
-                    <span class="post-button">
-                        Make a post
-                    </span>
-                </a>
-                
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle dropdown-custom" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Make a post
+                        </button>
+                        <ul class="dropdown-menu drpdwn-cstm-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>                        
+                                <span type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                    Post an image
+                                </span>
+                            </li>
+                            <li>
+                                <span type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#videoModal">
+                                    Post a video
+                                </span>
+                            </li>
+                            <li>
+                                <span type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#textModal">
+                                    Share a story
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                {% endblock %}
                 <ul class="list-container">
                     <li>
                         <a class="reading-list" href="{% url 'user_reading_list' %}">My Readig List</a>

@@ -86,5 +86,28 @@ footer {
 }
 
 .text-post {
-    margin: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cover-text img {
+    float: left;
+    width: 100px;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+}
+
+.title-rating span {
+    margin-right: 3rem;
+    font-weight: 600;
+}
+
+.title-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
 }

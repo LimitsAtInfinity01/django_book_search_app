@@ -128,7 +128,6 @@ ul.navbar-list {
     background-color: #e7e0de;
 }
 
-
 .submit-search {
     position: absolute;
     right: 1px;
@@ -149,7 +148,6 @@ ul.navbar-list {
     height: 14px;
 }
 
-
 .submit-search:hover {
     background-color: wheat;
     cursor: pointer;
@@ -165,11 +163,6 @@ ul.navbar-list {
     margin-right: auto;
     padding: 0;
     height: auto;
-}
-
-
-.current-user h3 {
-    align-self: flex-start;
 }
 
 .list-container li {
@@ -192,34 +185,24 @@ ul.navbar-list {
     gap: 1rem;
 }
 
-.list-container ul li a:hover {
+.list-container li a:hover {
     background-color: #e07a5f;
     color: white;
 }
 
-#post-button-link {
-    all: unset;
-}
-
-.post-button {
-    text-decoration: none;    
+.dropdown-custom {
+    background-color: #7fd1b9;
     color: black;
     font-weight: 500;
-    background-color: #7fd1b9;
+    border: #7fd1b9;
     padding: 10px;
-    border-radius: 5px;
-    width: 110px;
 }
 
-.post-button:hover {
+.dropdown-custom:hover {
     background-color: #e07a5f;
     color: white;
 }
 
-.current-user span a {
-    all: unset;
-}
-
-.current-user span:hover {
-    cursor: pointer;
+.drpdwn-cstm-menu {
+    background-color: #f4f1de;
 }

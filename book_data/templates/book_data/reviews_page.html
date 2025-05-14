@@ -1,0 +1,55 @@
+{% extends 'book_data/layout.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style/posts_reviews_cards.css' %}">
+{% endblock %}
+
+{% block title %}
+    Reviews
+{% endblock %}
+
+{% block post_buttons %}
+    <div></div>
+{% endblock %}
+
+{% block content %}
+
+    <main id="main-container">
+
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="card">
+                    <header class="cover-text">
+                        <img src="{{ review.cover_url }}" alt="">
+                        <div>
+                            <div class="title-rating">
+                                <h5>{{ review.book_title }}</h5>
+                                <span>Rating: {{ review.rating }}</span>
+                            </div>
+                            <p class="text-post">
+                                {{ review.content }}
+                            </p>
+                        </div>
+                    </header>
+                    <span class="line"></span>
+                    <footer>
+                        <div class="user">
+                            <div>
+                                <div class="avatar">
+                                    <img class="profile-img" src="{{ review.reviewer.profile.avatar.url }}" alt="">
+                                </div>
+                                <div class="username">{{ review.reviewer }}</div>
+                            </div>
+                            <p>{{ review.created_at }}</p>
+                        </div>
+                    </footer>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
+    </main>
+
+{% endblock %}

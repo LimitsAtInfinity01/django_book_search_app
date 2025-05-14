@@ -11,10 +11,16 @@
     Reading List
 {% endblock %}
 
+
+{% block post_buttons %}
+    <div></div>
+{% endblock %}
+
 {% block content %}
     
+    
     <div class="list">
-
+        <h1>Your reading list!</h1>
         <table class="table">
 
             <tr class="t-row">
@@ -29,8 +35,8 @@
 
 
                 <tr class="t-row">
-                    <td class="td"><img class="cover" src="{{ book.cover }}" alt="book cover">{{ book.cover }}</td>
-                    <td class="td"><a href="{% url 'book_view' book.book_id book.cover_key %}">{{ book.title  }}</a></td>
+                    <td class="td"><img class="cover" src="{{ book.cover }}" alt="book cover"></td>
+                    <td class="td"><a href="{% url 'book_view' book.book_id book.cover_key %}">{{ book.title }}</a></td>
                     <td class="td">{{ book.author_name }}</td>
                     <td class="td">5</td>
                     <td class="remove">

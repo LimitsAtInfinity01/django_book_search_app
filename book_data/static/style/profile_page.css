@@ -2,139 +2,92 @@
     box-sizing: border-box;
 }
 
-.grid-container {
-    
+#mn-container {
     display: grid;
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: repeat(5, auto) ;
-    grid-template-areas: 
-        "pic biography"
-        "settings followers"
-        "settings reviews-number"
-        "settings eading-list"
-        "settings recent-reviews";
-    margin-left: 12.5%;
-    margin-right: 12.5%;
+    grid-template-columns: 20vw 1fr 1fr;
+    grid-template-rows: auto auto auto;
+
 }
 
-.avatar-img-div {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    border-style: solid;
-    border-color: #e07a5f;
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+#personal-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
 
-.profile-contianer {
+.inner-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-height: 300px;
-}
-
-.avatar-form {
-    display: flex;
-    flex-direction: column;
+    background-color: #f3bfa2;
     width: 100%;
-    max-width: 100%;
-    /* align-items: center;
-    justify-content: center; */
-    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-radius: 10px;
 }
 
-.biography {
-    padding: 2rem;
+#avatar-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #f9d9ca;
+    margin-top: 2rem;
 }
 
-.followers-container {
-    min-height: 100px;
-    display: flex;
-    justify-content: space-around;
+
+
+.shared-attributes {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#name-title-container {
+    width: 70%;
+    text-align: center;
     margin-top: 1rem;
 }
 
-.settings {
-    grid-area: settings;
+
+#bio-container {
+    background-color: #f9d9ca;
+    width: 80%;
+    border-radius: 10px
 }
 
-.grid-item {
-    outline: solid black;
-    background-color: red;
+#bio-container p {
+    padding: 1.2rem;
 }
 
-
-.custom-label {
-    border: 1px solid #ccc;
-    border-radius: 7%;
-    display: inline-block;
-    padding: 2px 6px;
-    cursor: pointer;
-    margin: 5px;
-    font-size: 12px;
-  }
-
-.btn-size {
-    padding: 0;
-    margin-bottom: 10px;
-    width: 10rem;
-}
-
-.review-list li {
-    display: inline-block;
-    border: black solid 1px;
+#personal-info-list {
+    margin-top: 2rem;
+    width: 80%;
+    background-color: #f9d9ca;
     border-radius: 10px;
-    background-color: #e07a5f;
-    padding: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-left: 5px;
-    margin-top: 5px;
 }
 
-.reading-list li{
-    display: inline-block;
-    border: black solid 1px;
-    border-radius: 10px;
-    background-color: #bde0fe;
-    padding: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-left: 5px;
-    margin-top: 5px;
+#personal-info-list ul {
+    list-style: none;
 }
 
-.follower-avatar {
-    max-width: 50px;
-    max-height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: black solid 1px;
-
-    img {
-        width: 100%;
-        
-    }
-
+#personal-info-list ul:first-child > li {
+    padding-bottom: 0.5rem;
 }
 
 
-.following {
+#personal-info-list ul:first-child > li:first-child {
+    padding-top: 1rem;
+}
+
+#personal-info-list ul:nth-child(2) {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
-.individual-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 10px;
+#personal-info-list ul:nth-child(2) li {
+    background-color: #b4301c;
+    display: inline;
+    padding: 0.5rem;
+    border-radius: 7px;   
+
 }

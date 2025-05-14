@@ -11,6 +11,10 @@
 {% endblock %}
 
 
+{% block post_buttons %}
+    <div></div>
+{% endblock %}
+
 {% block content %}
 
      <div class="list">
@@ -26,10 +30,9 @@
             </tr>
 
             {% for book in books %}
-
-
+            
                 <tr class="t-row">
-                    <td class="td"><img class="cover" src="{{ book.cover_id }}" alt="book cover">   </td>
+                    <td class="td"><img class="cover" src="{{ book.cover_url }}" alt="book cover">   </td>
                     <td class="td"><a href="{% url 'book_view' book.book_id book.cover_key %}">{{ book.title  }}</a></td>
                     <td class="td">{{ book.author_name }}</td>
                     <td class="td">5</td>

@@ -28,7 +28,7 @@ from book_data.views import (index, login_view,
                             delete_review_from_list,
                             user_profile_page, general_profile_page,
                             biography, favorite_books, favorite_books_list,
-                            follow, make_post, render_recent_posts)
+                            follow, render_recent_posts, reviews_page)
 
 # path(url, view, name to reference it)
 urlpatterns = [
@@ -53,8 +53,8 @@ urlpatterns = [
     path('biography', biography, name='biography'),
     path('favorite_books_list', favorite_books_list, name='favorite_books_list'),
     path('follow', follow, name='follow'),
-    path('make_post', make_post, name='make_post'),
-    path('recent_posts', render_recent_posts, name='recent_posts')
+    path('recent_posts', render_recent_posts, name='recent_posts'),
+    path('reviews_page', reviews_page, name='reviews_page')
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -31,12 +31,48 @@ from book_data.fetch_book_data import book_data_reading_list, main_fetch
 # Create your views here.
 def index(request):
     query = request.GET.get('query')
+
+    image_form = ImagePostForm()
+    video_form = VideoPostForm()
+    text_form = TextPostForm()
+
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'image_form':
+            form = ImagePostForm(request.POST, request.FILES)
+
+        elif form_type == 'video_form':
+            form = VideoPostForm(request.POST, request.FILES)
+
+        else:
+            form = TextPostForm(request.POST, request.FILES)
+
+        if form and form.is_valid():
+            post = form.save(commit=False)
+            post.post_type = form_type
+            post.user = request.user
+            post.save()
+            return redirect('recent_posts')
+
     if query:
         books = main_fetch(query)
         books = books[0:20]
-        return render(request, "book_data/index.html", {'books': books})
-    return render(request, "book_data/index.html")
 
+        context = {
+            'books': books,
+            'image_form': image_form,
+            'video_form': video_form,
+            'text_form': text_form,
+        }
+        return render(request, "book_data/index.html", context)
+    
+    context = {
+        'image_form': image_form,
+        'video_form': video_form,
+        'text_form': text_form,
+    }
+    return render(request, "book_data/index.html", context)
 
 def render_recent_posts(request):
 
@@ -66,40 +102,6 @@ def render_recent_posts(request):
 
     return render(request, 'book_data/recent_posts.html', context)
 
-def make_post(request):
-
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'image_form':
-            form = ImagePostForm(request.POST, request.FILES)
-
-        elif form_type == 'video_form':
-            form = VideoPostForm(request.POST, request.FILES)
-
-        else:
-            form = TextPostForm(request.POST, request.FILES)
-
-        if form and form.is_valid():
-            post = form.save(commit=False)
-            post.post_type = form_type
-            post.user = request.user
-            post.save()
-            return redirect('recent_posts')
-
-    else:
-        image_form = ImagePostForm()
-        video_form = VideoPostForm()
-        text_form = TextPostForm()
-
-    context = {
-        'image_form': image_form,
-        'video_form': video_form,
-        'text_form': text_form
-    }
-
-    return render(request, 'book_data/post.html', context)
-
 @login_required
 def follow(request):
     if request.method == 'POST':
@@ -117,10 +119,13 @@ def follow(request):
 def favorite_books(request, book_id, cover_key=None):
     book_details = request.session.get('book_details', {})  # Ensure a default empty dict
     title = book_details.get('title', 'Unknown Title')
+
+    cover_url = f'https://covers.openlibrary.org/b/olid/{cover_key}.jpg'
     favorites_books, created = FavoriteBooks.objects.get_or_create(
         user=request.user,
         title=title,
         book_id=book_id,
+        cover_url=cover_url,
         cover_id=cover_key
     )
 
@@ -137,26 +142,13 @@ def favorite_books(request, book_id, cover_key=None):
         return redirect(reverse('book_view', args=[book_id, cover_key]))
 
 def favorite_books_list(request):
-
     try:
         books = FavoriteBooks.objects.filter(user=request.user)
     except ObjectDoesNotExist:
         books = None
-    
-    fav_books  = []
-    for i in range(len(books)):
-        dict_book = {}
-        dict_book['title'] = books[i].title
-        if books[i].cover_id is not None:
-            cover_url = f'https://covers.openlibrary.org/b/olid/{books[i].cover_id}.jpg'
-        else:
-            cover_url = static('/images/books.jpeg')
-        dict_book['cover_id'] = cover_url
-        dict_book['book_id'] = books[i].book_id
-        fav_books.append(dict_book)
 
     context = {
-        'books': fav_books
+        'books': books
     }
 
     return render(request, 'book_data/favorite_books.html', context)
@@ -356,6 +348,19 @@ def user_reviews_page(request):
 
     return render(request, 'book_data/user_reviews.html', context)
 
+def reviews_page(request):
+    
+    try:
+        reviews = Reviews.objects.all().order_by('-created_at')
+    except ObjectDoesNotExist:
+        reviews = None
+    
+    context = {
+        'reviews': reviews
+    }
+
+    return render(request, 'book_data/reviews_page.html', context)
+
 @login_required
 def user_reading_list(request):
     user = request.user
@@ -467,12 +472,11 @@ def write_review(request):
     coverKey = book_details.get('cover_key')
     title = book_details.get('title')
 
+    cover_url = f'https://covers.openlibrary.org/b/olid/{coverKey}.jpg'
     if request.method == 'POST':
         form = ReviewsForm(request.POST)
         if form.is_valid():
 
-            # Process the validated data
-            # review_title = form.cleaned_data['title']
             review_content = form.cleaned_data['content']
             review_rating = form.cleaned_data['rating']
 
@@ -482,6 +486,7 @@ def write_review(request):
                              book_title=title,
                              book_id = bookID,
                              cover_id = coverKey,
+                             cover_url = cover_url,
                              content = review_content,
                              rating = review_rating)
             review.save()

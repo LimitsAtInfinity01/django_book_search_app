@@ -50,6 +50,7 @@ class Reviews(models.Model):
     book_title = models.CharField(max_length=120)
     book_id = models.CharField(max_length=50)
     cover_id = models.CharField(max_length=50)
+    cover_url = models.URLField()
     content = models.TextField()
     rating = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -94,6 +95,7 @@ class FavoriteBooks(models.Model):
     title = models.CharField(max_length=50)
     book_id = models.CharField(max_length=50)
     cover_id = models.CharField(max_length=50, null=True, blank=True)
+    cover_url = models.URLField()
 
     class Meta:
         db_table = 'favorite_books'
