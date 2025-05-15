@@ -177,6 +177,8 @@ def user_profile_page(request, user_id):
             profile = request.user.profile
             profile.avatar = avatar_form.cleaned_data['avatar']
             profile.save()
+            print('PICTURE SUBMITED')
+            print(profile.avatar)
             return redirect('user_profile_page', user_id)
         else:
             return redirect('index')
@@ -219,8 +221,6 @@ def user_profile_page(request, user_id):
         followers = Following.objects.filter(following=request.user).order_by('-created_at')
     except ObjectDoesNotExist:
         followers = None
-
-    print(favorite_books)
 
     context = {
         'reading_list': reading_list,
