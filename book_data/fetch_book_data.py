@@ -8,7 +8,6 @@ from django.core.cache import cache
 def main_fetch(search_term):
 
     url = f'https://openlibrary.org/search.json?q={search_term}'
-    print(url)
     response = requests.get(url)
     data = response.json()
     doc = data['docs'][0]

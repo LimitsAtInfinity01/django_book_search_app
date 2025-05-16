@@ -5,14 +5,13 @@
 #mn-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* grid-template-rows: auto auto auto; */
-
+    gap: 5rem;
 }
 
 #personal-container {
-    margin-left: 1rem;
+    margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    max-width: 25rem;
 }
 
 .inner-container {
@@ -24,12 +23,15 @@
     margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #avatar-container {
     width: 200px;
     height: 200px;
     border-radius: 50%;
+    
     background-color: #f9d9ca;
     margin-top: 2rem;
     overflow: hidden;
@@ -40,11 +42,23 @@
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
+        border: 3px solid white;
     }
 
 }
 
-.avatar
+.avatar-bttn {
+    color: black;
+    background-color: #7fd1b9;
+    margin-top: 1rem;
+    border: none;
+    padding: 0.4rem;
+}
+
+.avatar-bttn:hover {
+    background-color: #e07a5f;
+}
+
 
 .shared-attributes {
     margin-left: auto;
@@ -54,14 +68,22 @@
 #name-title-container {
     width: 70%;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 
 #bio-container {
-    background-color: #f9d9ca;
     width: 80%;
-    border-radius: 10px
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f9d9ca;
+
+}
+
+#bio-container button {
+    margin-bottom: 1rem;
 }
 
 #bio-container p {
@@ -101,9 +123,117 @@
 }
 
 #personal-info-list ul:nth-child(2) li {
-    background-color: #b4301c;
+    background-color: #cf6959;
     display: inline-flex;
     flex-wrap: wrap;
     padding: 0.5rem;
-    border-radius: 7px;   
+    border-radius: 7px;  
+    color: white; 
+}
+
+
+#lists-container {
+    grid-column: 2/3;
+    background-color: #f3bfa2;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 50%;
+}
+
+#lists-container h2 {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+
+
+#reading-list-section {
+    margin-bottom: 3rem;
+}
+
+#reading-list-section,
+#favorite-list-section {
+    background-color: #f9d9ca;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    max-height: 35%;
+    padding: 1rem;
+    border-radius: 10px;
+    overflow-y: scroll;
+    border: 1px solid white;
+}
+
+
+
+.h3-style {
+    color: rgba(0, 0, 0, 0.637);
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+#reading-list-section ul:nth-child(2) li::marker {
+    content: "📚 ";    
+}
+
+#favorite-list-section ul:nth-child(2) li::marker {
+    content: "🤎 ";   
+}
+
+#reading-list-section ul:nth-child(2) li,
+#favorite-list-section ul:nth-child(2) li {
+    margin-bottom: 0.5rem;
+}
+
+
+#review-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f3bfa2;
+    width: 700px;
+    max-height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    border-radius: 10px;
+    grid-column: 3/4;
+    gap: 1rem;
+    overflow-y: scroll;
+}
+
+#reviews-section {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#review-list > div {
+    background-color: #f9d9ca;
+    border: 2px solid white;
+    border-radius: 10px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+
+#review-list div:first-child div {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#review-container h2 {
+    text-align: center;
+    margin-top: 1rem;
 }

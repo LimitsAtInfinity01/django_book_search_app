@@ -23,77 +23,97 @@
         <section id="personal-container">
            <div class="inner-container">
 
-            
-            <div id="avatar-container" class="shared-attributes ">
-                <img src="{{ avatar_url }}" alt="">
-            </div>
-
-            <div id="avatar-modal" class="avater-modal shared-attributes">
-                
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary shared-attributes" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Change Avatar
-                </button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="" method="POST" enctype="multipart/form-data"> 
-                            <div class="modal-body">
-                                {% csrf_token %}
-                                {{ avatar_form }}
-                                
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="input" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                    </div>
+                <div id="avatar-container" class="shared-attributes">
+                    <img src="{{ avatar_url }}" alt="">
                 </div>
 
-            </div>
-            
-            <div id="name-title-container" class="shared-attributes">
-                <p>Firs name, Last name</p>
-                <p>title: my title here</p>
-            </div>
+                <div id="avatar-modal" class="avater-modal shared-attributes">
+                    
+                    <button type="button" class="btn btn-primary avatar-bttn" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                        Change Avatar
+                    </button>
+                    
+                    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="" method="POST" enctype="multipart/form-data"> 
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    {{ avatar_form }}
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" name="submit_avatar" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="name-title-container" class="shared-attributes">
+                    <p>{{ request.user }}</p>
+                    <p>Title: Reader</p>
+                </div>
 
 
-            <div id="bio-container" class="shared-attributes">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                   Quaerat quisquam ad facilis excepturi, eaque qui voluptate 
-                   voluptas dolor praesentium est ducimus tempora quia voluptates 
-                   voluptatibus consectetur molestiae natus, ab aperiam.
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                   Quaerat quisquam ad facilis excepturi, eaque qui voluptate 
-                   voluptas dolor praesentium est ducimus tempora quia voluptates 
-                   voluptatibus consectetur molestiae natus, ab aperiam.
-                </p>
-            </div>
+                <div id="bio-container" class="shared-attributes">
+                    <p>
+                        {{ bio }}
+                    </p>
+
+                    <div class="shared-attributes"> 
+                        <button type="button" class="btn btn-primary avatar-bttn" data-bs-toggle="modal" data-bs-target="#bioModal">
+                        Add a bio!
+                        </button>
+
+                        <div class="modal fade" id="bioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                    <form action="" method="POST">
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            {{ bio_form }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" name="submit_bio" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
 
-            <div id="personal-info-list" class="shared-attributes ">
-                <ul>
-                    <li><span>Age:</span> 99</li>
-                    <li><span>Status:</span> Reading</li>
-                    <li><span>Location:</span> Planet Earth</li>
-                </ul>
-                <ul>
-                    <li><span>Alpha</span></li>
-                    <li><span>Bravo</span></li>
-                    <li><span>Charlie</span></li>
-                    <li><span>Delta</span></li>
-                    <li><span>Echo</span></li>
-                    <li><span>Echo</span></li>
-                </ul>
-            </div>
+
+
+                <div id="personal-info-list" class="shared-attributes ">
+                    <ul>
+                        <li><span>Age:</span> 99</li>
+                        <li><span>Status:</span> Reading</li>
+                        <li><span>Location:</span> Planet Earth</li>
+                    </ul>
+                    <ul>
+                        <li><span>Alpha</span></li>
+                        <li><span>Bravo</span></li>
+                        <li><span>Charlie</span></li>
+                        <li><span>Delta</span></li>
+                        <li><span>Echo</span></li>
+                        <li><span>Echo</span></li>
+                    </ul>
+                </div>
 
            </div>
         </section>
@@ -101,26 +121,59 @@
 
 
         <section id="lists-container">
+            <h2>Reading and Favorite Lists</h2>
+
+            <section id="reading-list-section" class="shared-attributes" aria-labelledby="reading-list">
+                <h3 class="h3-style ">I am reading!</h3>
+                <ul id="reading-list">
+                    {% for item in reading_list %}
+                        <li>{{ item.title }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+
+            <section id="favorite-list-section" class="shared-attributes" aria-labelledby="favorie-list">
+                <h3 class="h3-style ">Favorite Books</h3>
+                <ul id="favorite-list">
+                    {% for item in favorite_books %}
+                        <li>{{ item.title }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
 
         </section>
 
 
 
-        <section id="misc-container">
+        <section id="review-container">
+            <h2>My Reviews</h2>
+            <section id="reviews-section" class="shared-attributes" aria-labelledby="review-list">
+
+                <div id="review-list" >
+
+                    {% for review in reviews %}
+                        <div>
+                                <div>
+                                    <span>Title: {{ review.book_title }} </span>
+                                    <span>Rating: {{ review.rating }}</span>
+                                </div>
+                                <p>
+                                    {{review.content }}
+                                </p>
+                        </div>
+                     {% endfor %}
+
+
+
+                </div>
+
+            </section>
 
         </section>
-
-
 
 
     </main>
 
 
-
-
-    <!-- <script>
-        setTimeout(function() {
-            window.location.reload();
-        }, 10000); // Refresh every 10 seconds (10000 milliseconds)
-    </script> -->
 {% endblock %}

@@ -153,38 +153,29 @@ def favorite_books_list(request):
 
     return render(request, 'book_data/favorite_books.html', context)
 
-def biography(request):
-    if request.method == 'POST':
-        form = BioForm(request.POST)
-        if form.is_valid():
-            profile = request.user.profile
-            profile.bio = form.cleaned_data['bio']
-            profile.save()
-            return redirect('user_profile_page', request.user.id )
-    else:
-        form = BioForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'book_data/biography.html', context)
-
 @login_required
 def user_profile_page(request, user_id):
     if request.method == 'POST':
-        avatar_form = AvatarForm(request.POST, request.FILES)
-        if avatar_form.is_valid():
-            profile = request.user.profile
-            profile.avatar = avatar_form.cleaned_data['avatar']
-            profile.save()
-            print('PICTURE SUBMITED')
-            print(profile.avatar)
-            return redirect('user_profile_page', user_id)
-        else:
-            return redirect('index')
+        if 'submit_avatar' in request.POST:
+            avatar_form = AvatarForm(request.POST, request.FILES)
+            bio_form = BioForm()  # empty form
+            if avatar_form.is_valid():
+                profile = request.user.profile
+                profile.avatar = avatar_form.cleaned_data['avatar']
+                profile.save()
+                return redirect('user_profile_page', user_id)
+        elif 'submit_bio' in request.POST:
+            bio_form = BioForm(request.POST)
+            avatar_form = AvatarForm()  # empty form
+            if bio_form.is_valid():
+                profile = request.user.profile
+                profile.bio = bio_form.cleaned_data['bio']
+                profile.save()
+                return redirect('user_profile_page', user_id)
     else:
         avatar_form = AvatarForm()
-
+        bio_form = BioForm()
+        
     try:
         profile = request.user.profile
         avatar_url = profile.avatar.url
@@ -231,7 +222,12 @@ def user_profile_page(request, user_id):
         'bio': bio,
         'following': following,
         'followers': followers,
+        'bio_form': bio_form 
     }
+
+    for item in reviews:
+        print(item.book_title)
+        print(item.content)
 
     return render(request, 'book_data/user_profile_page.html', context)
 
@@ -408,7 +404,21 @@ def book_view(request, book_id, cover_key=''):
     api_url = f'https://openlibrary.org/works/{book_id}.json'
 
     response = requests.get(api_url)
-    data = response.json()
+
+    # Check for non-200 status
+    if response.status_code != 200:
+        print("API returned non-200 status:", response.status_code)
+        print("Response text:", response.text)
+        return HttpResponse("Error: Failed to fetch data from API", status=500)
+
+    # Ensure there's content to decode
+    try:
+        data = response.json()
+    except ValueError as e:
+        print("Error decoding JSON:", e)
+        print("Response text:", response.text)
+        return HttpResponse("Error: Invalid JSON received from API", status=500)
+
 
     author_key = data['authors'][0]['author']['key']
     author_api = f'https://openlibrary.org/{author_key}.json'
