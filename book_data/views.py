@@ -74,8 +74,8 @@ def index(request):
     }
     return render(request, "book_data/index.html", context)
 
-def render_recent_posts(request):
-
+# This logic is duplicated in the user profile view
+def recent_posts():
     try:
         image_posts = ImagePosts.objects.all().order_by('-created_at')
     except ObjectDoesNotExist:
@@ -95,9 +95,14 @@ def render_recent_posts(request):
     all_posts = list(chain(image_posts, video_posts, text_posts))
 
     all_posts_sorted = sorted(all_posts, key=attrgetter('created_at'), reverse=True)
+    return all_posts_sorted
+
+def render_recent_posts(request):
+
+    posts = recent_posts()
 
     context = {
-        'posts': all_posts_sorted
+        'posts': posts
     }
 
     return render(request, 'book_data/recent_posts.html', context)
@@ -108,9 +113,10 @@ def follow(request):
         follower = request.user
         following_id = request.POST.get('following_id')
         following = get_object_or_404(User, id=following_id)
-
+        print("Before")
         if follower != following:
             # Create relation only if it doesn't exist
+            print("After")
             Following.objects.get_or_create(follower=follower, following=following)
 
         next_url = request.POST.get('next', '/')
@@ -213,6 +219,8 @@ def user_profile_page(request, user_id):
     except ObjectDoesNotExist:
         followers = None
 
+    posts = recent_posts()
+
     context = {
         'reading_list': reading_list,
         'reviews': reviews,
@@ -222,12 +230,12 @@ def user_profile_page(request, user_id):
         'bio': bio,
         'following': following,
         'followers': followers,
-        'bio_form': bio_form 
+        'bio_form': bio_form, 
+        'posts': posts
     }
 
-    for item in reviews:
-        print(item.book_title)
-        print(item.content)
+    print(f'Followers: {followers}')
+    print(f'Following: {following}')
 
     return render(request, 'book_data/user_profile_page.html', context)
 
@@ -270,6 +278,7 @@ def general_profile_page(request, user_id):
         followers = Following.objects.filter(following=profile.user).order_by('-created_at')
     except ObjectDoesNotExist:
         followers = None
+
     
     context = {
         'user': user,

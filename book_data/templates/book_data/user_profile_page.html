@@ -9,8 +9,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'style/profile_page.css' %}">
-    <script src="{% static 'scripts/profile_scripts.js' %}"></script>
-    
+    <link rel="stylesheet" href="{% static 'style/posts_reviews_cards.css' %}">
 {% endblock %}
 
 {% block post_buttons %}
@@ -144,14 +143,10 @@
 
         </section>
 
-
-
         <section id="review-container">
             <h2>My Reviews</h2>
             <section id="reviews-section" class="shared-attributes" aria-labelledby="review-list">
-
                 <div id="review-list" >
-
                     {% for review in reviews %}
                         <div>
                                 <div>
@@ -163,15 +158,131 @@
                                 </p>
                         </div>
                      {% endfor %}
+                </div>
+            </section>
+        </section>
 
 
+
+        <section id="followers-container" aria-labelledby="followers-section">
+            
+            <div>
+                <h3>Folowing</h3>
+                <ul id="following-section">
+                    {% for item in following %}
+                            <li>{{ item.following }}</li>
+                    {% endfor%}
+                    <li>John Doe</li>
+                    <li>Jane Smith</li>
+                    <li>Alex Johnson</li>
+                    <li>Chris Lee</li>
+                    <li>Sam Taylor</li>
+                    <li>John Doe</li>
+                    <li>Jane Smith</li>
+                    <li>Alex Johnson</li>
+                    <li>Chris Lee</li>
+                    <li>Sam Taylor</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Followers</h3>
+                <ul id="followers-section">
+                    {% for item in followers %}
+                            <li>{{ item.follower }}</li>
+                    {% endfor%}
+                    <li>John Doe</li>
+                    <li>Jane Smith</li>
+                    <li>Alex Johnson</li>
+                    <li>Chris Lee</li>
+                    <li>Sam Taylor</li>
+                    <li>John Doe</li>
+                    <li>Jane Smith</li>
+                    <li>Alex Johnson</li>
+                    <li>Chris Lee</li>
+                    <li>Sam Taylor</li>
+                </ul>
+            </div>
+
+
+        </section>
+
+        <section id="posts-container">
+            <h2>My Posts</h2>
+            <section id="posts-section" class="shared-attributes" aria-labelledby="posts-list">
+                
+                <div id="posts-list">
+
+                    {% for post in posts %}
+            
+                        {% if post.post_type == 'image_form' %}
+                            <div class="card">
+                                <header><img class="image-post" src="{{ post.image.url }}" alt="post image"></header>
+                                <footer>
+                                    <div class="user">
+                                        <div>
+                                            <img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt="">
+                                            <div class="username">{{ post.user }}</div>
+                                        </div>
+                                        <p>{{ post.created_at }}</p>
+                                    </div>
+                                    <span class="line"></span>
+                                    <div class="description">
+                                        <p>{{ post.description }}</p>
+                                    </div>
+                                </footer>
+                            </div>
+                        {% endif %}
+
+                        {% if post.post_type == 'video_form' %}
+                            <div class="card">
+                                <video class="video-post" controls>
+                                    <source src="{{ post.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <footer>
+                                    <div class="user">
+                                        <div>
+                                            <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
+                                            <div class="username">{{ post.user }}</div>
+                                        </div>
+                                        <p>{{ post.created_at }}</p>
+                                    </div>
+                                    <span class="line"></span>
+                                    <div class="description">
+                                        <p>{{ post.description }}</p>
+                                    </div>
+                                </footer>
+                            </div>
+                        {% endif %}
+
+
+                        {% if post.post_type == 'text_form' %}
+
+                            <div class="card">
+                                <header><p class="text-post">{{ post.text }}</p></header>
+                                <span class="line"></span>
+                                <footer>
+                                    <div class="user">
+                                        <div>
+                                            <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
+                                            <div class="username">{{ post.user }}</div>
+                                        </div>
+                                        <p>{{ post.created_at }}</p>
+                                    </div>
+                                </footer>
+                            </div>
+
+                        {% endif %}
+
+
+                    {% endfor %}
 
                 </div>
 
             </section>
 
         </section>
-
 
     </main>
 

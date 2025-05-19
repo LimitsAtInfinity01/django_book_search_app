@@ -42,43 +42,43 @@
                 {% endif %}
 
                 {% if post.post_type == 'video_form' %}
-                <div class="card">
-                    <video class="video-post" controls>
-                        <source src="{{ post.video.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <footer>
-                        <div class="user">
-                            <div>
-                                <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
-                                <div class="username">{{ post.user }}</div>
+                    <div class="card">
+                        <video class="video-post" controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <footer>
+                            <div class="user">
+                                <div>
+                                    <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
+                                    <div class="username">{{ post.user }}</div>
+                                </div>
+                                <p>{{ post.created_at }}</p>
                             </div>
-                            <p>{{ post.created_at }}</p>
-                        </div>
-                        <span class="line"></span>
-                        <div class="description">
-                            <p>{{ post.description }}</p>
-                        </div>
-                    </footer>
-                </div>
+                            <span class="line"></span>
+                            <div class="description">
+                                <p>{{ post.description }}</p>
+                            </div>
+                        </footer>
+                    </div>
                 {% endif %}
 
 
                 {% if post.post_type == 'text_form' %}
 
-                <div class="card">
-                    <header><p class="text-post">{{ post.text }}</p></header>
-                    <span class="line"></span>
-                    <footer>
-                        <div class="user">
-                            <div>
-                                <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
-                                <div class="username">{{ post.user }}</div>
+                    <div class="card">
+                        <header><p class="text-post">{{ post.text }}</p></header>
+                        <span class="line"></span>
+                        <footer>
+                            <div class="user">
+                                <div>
+                                    <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
+                                    <div class="username">{{ post.user }}</div>
+                                </div>
+                                <p>{{ post.created_at }}</p>
                             </div>
-                            <p>{{ post.created_at }}</p>
-                        </div>
-                    </footer>
-                </div>
+                        </footer>
+                    </div>
 
                 {% endif %}
 
