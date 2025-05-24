@@ -31,7 +31,6 @@ from book_data.fetch_book_data import book_data_reading_list, main_fetch
 # Create your views here.
 def index(request):
     query = request.GET.get('query')
-
     image_form = ImagePostForm()
     video_form = VideoPostForm()
     text_form = TextPostForm()
@@ -57,8 +56,6 @@ def index(request):
 
     if query:
         books = main_fetch(query)
-        books = books[0:20]
-
         context = {
             'books': books,
             'image_form': image_form,

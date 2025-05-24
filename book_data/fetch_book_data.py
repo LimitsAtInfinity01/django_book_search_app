@@ -1,44 +1,42 @@
 import requests
-import json
+from book_data.lo_api_wrapper.wrapper import BookAPI, CoverAPI
 
 from django.core.cache import cache
 
 
 #Main fetch book data function
-def main_fetch(search_term):
+def main_fetch(search_term, limit: int = 99):
 
-    url = f'https://openlibrary.org/search.json?q={search_term}'
-    response = requests.get(url)
-    data = response.json()
-    doc = data['docs'][0]
+    search = BookAPI(search_term=search_term, limit=10)
+    books = search.get_docs()
+    
+    book_list = []
+    for book in books: # type: ignore
 
-    books = []
-    for doc in data['docs']:
-        key = doc.get('key', '')
-        cleaned_key = key.split('/')[2]
-        cover_edition_key = doc.get('cover_edition_key', '')
-        if cover_edition_key == '':
-            cover_url = '/static/images/books.jpeg'
+        cover_edition_key = book.get('cover_edition_key', None)
+        if cover_edition_key is None:
+            cover_url = None
         else:
-            cover_url = f'https://covers.openlibrary.org/b/olid/{cover_edition_key}-M.jpg'
+            cover_url = f'https://covers.openlibrary.org/b/olid/{cover_edition_key}-M.jpg?default=false' 
 
-        book = {
-            "author_key": doc.get('author_key', 'N/A'),
-            "author_name": doc.get('author_name', 'N/A'),
-            'cover_edition_key': cover_edition_key, 
-            "cover_url": cover_url,
-            "cleaned_key": cleaned_key,
-            "key": key,
-            "first_publish_year": doc.get('first_publish_year', 'N/A'),
-            "language": doc.get('language', 'N/A'),
-            "title": doc.get('title', 'N/A'),
-            "subtitle": doc.get('subtitle', 'N/A'),
-            "bookUrl": f'/book_view/{cleaned_key}/{cover_edition_key}/'
-        }   
+        dict = {
+            "author_key": book.get('author_key', 'N/A'),
+            "author_name": book.get('author_name', 'N/A'),
+            "first_publish_year": book.get('first_publish_year', 'N/A'),
+            "language": book.get('language', 'N/A'),
+            "title": book.get('title', 'N/A'),
+            "subtitle": book.get('subtitle', 'N/A'),
+            'key': book.get('key', None),
+            "bookUrl": f'/book_view{book.get('key', None)}/{cover_edition_key}/',
+            "cover_url": cover_url
+        }
+        book_list.append(dict)
 
-        books.append(book)
+    for book in book_list:
+        for k, v in book.items():
+            print(f'{k}: {v}')
 
-    return books
+    return book_list
 
 
 def book_data_reading_list(book_id, cover_key):

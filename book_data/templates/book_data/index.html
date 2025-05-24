@@ -5,8 +5,10 @@
 {% load static %}
 
 {% block extra_css %}
+    
     <link rel="stylesheet" href="{% static 'style/index.css' %}">
     <link rel="stylesheet" href="{% static 'style/cards.css' %}">
+
 {% endblock %}
 
 
@@ -168,7 +170,12 @@
                             
                             <div class="book-image-container">
                                 <a href="{{ book.bookUrl }}">
-                                    <img src="{{ book.cover_url }}" alt="" class="book-image">
+                                    {% if book.cover_url is not None %}
+                                        <img src="{{ book.cover_url }}" alt="" class="book-image">
+                                    {% else %}
+                                        <img src="{% static 'images/book_placeholder2.png' %}" alt="" class="book-image">
+                                    {% endif %}
+
                                 </a>
                             </div>
 
@@ -233,7 +240,6 @@
             
             </div>
         </div>
-
     </body>
 
 {% endblock %}
