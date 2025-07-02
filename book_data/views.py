@@ -38,7 +38,7 @@ def index(request):
     image_form = ImagePostForm()
     video_form = VideoPostForm()
     text_form = TextPostForm()
-
+    print('Hello')
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
 
