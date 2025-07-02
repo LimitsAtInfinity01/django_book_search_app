@@ -18,7 +18,6 @@
 
 {% block content %}
     
-    
     <div class="list">
         <h1>Your reading list!</h1>
         <table class="table">
@@ -35,7 +34,11 @@
 
 
                 <tr class="t-row">
-                    <td class="td"><img class="cover" src="{{ book.cover }}" alt="book cover"></td>
+                    {% if book.cover_url is not None %}
+                        <td class="td"><img class="cover" src="{{ book.cover_url }}" alt="book cover"></td>
+                    {% else %}
+                        <td class="td"><img class="cover" src="{% static 'images/book_placeholder2.png' %}" alt="book cover"></td>
+                    {% endif %}
                     <td class="td"><a href="{% url 'book_view' book.book_id book.cover_key %}">{{ book.title }}</a></td>
                     <td class="td">{{ book.author_name }}</td>
                     <td class="td">5</td>
@@ -53,6 +56,4 @@
 
     </div>
     
-
-
 {% endblock%}

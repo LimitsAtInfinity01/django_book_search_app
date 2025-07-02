@@ -53,7 +53,7 @@ footer {
 .user {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     background-color: #f2cc8f;
     margin-top: 0px;
 }
@@ -110,4 +110,10 @@ footer {
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
+}
+
+.user div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }

@@ -26,7 +26,11 @@ from book_data.models import Reviews, Comments, ReadingList, Profile, FavoriteBo
 from book_data.forms import ReviewsForm, CommentsForm, AvatarForm, BioForm, ImagePostForm, VideoPostForm, TextPostForm
 
 # Fetch book data classes
-from book_data.fetch_book_data import book_data_reading_list, main_fetch
+from book_data.fetch_book_data import  main_fetch
+
+# API Wrapper
+from book_data.lo_api_wrapper.wrapper import CoverAPI
+ 
 
 # Create your views here.
 def index(request):
@@ -305,7 +309,6 @@ def delete_review(request, review_id):
 
     review = get_object_or_404(Reviews, id=review_id)
     
-
     if request.user == review.reviewer:
         if request.method == 'POST':
             review.delete()
@@ -328,6 +331,31 @@ def get_comment(request, review_id):
         comment.save()
 
         return redirect('book_view', current_book_id, current_cover_key) 
+
+@login_required
+def delete_post(request, post_id):
+
+    # Get the type of the post and delete it
+    if request.method == 'POST':
+        print(request.POST)
+        if 'post' in request.POST:
+            if request.POST['post'] == 'image':
+                post = get_object_or_404(ImagePosts, id=post_id)
+
+            if request.POST['post'] == 'video':
+                post = get_object_or_404(VideoPosts, id=post_id)
+            
+            if request.POST['post'] == 'text':
+                post = get_object_or_404(TextPosts, id=post_id)
+                
+            if request.user == post.user:
+                post.delete()
+                return redirect('recent_posts')
+            
+
+
+
+    return redirect('recent_posts')
 
 @login_required
 def delete_comment(request, comment_id):
@@ -367,14 +395,18 @@ def reviews_page(request):
 def user_reading_list(request):
     user = request.user
     reading_list = ReadingList.objects.filter(user=user)
-    
     books = []
 
     for item in reading_list:
-        book_id = item.book_id
-        cover_key = item.cover_id
-
-        book = book_data_reading_list(book_id, cover_key)
+        cover = CoverAPI(value=item.cover_id)
+        cover_url = cover.get_image()
+        book = {
+            'book_id': item.book_id,
+            'cover_key': item.cover_id,
+            'title': item.title,
+            'author_name': item.author_name,
+            'cover_url': cover_url
+        }
         books.append(book)
     return render(request, 'book_data/user_reading_list.html', { 'books': books })
 
@@ -382,9 +414,11 @@ def user_reading_list(request):
 def add_reading_list(request, book_id, cover_key=None):
     book_details = request.session.get('book_details', {})  # Ensure a default empty dict
     title = book_details.get('title', 'Unknown Title')
+    author_name = book_details.get('author_name', 'Unknown Author')
     reading_list, created = ReadingList.objects.get_or_create(
         user=request.user,
         title=title,
+        author_name=author_name,
         book_id=book_id,
         cover_id=cover_key
     )

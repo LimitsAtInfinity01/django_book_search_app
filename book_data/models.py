@@ -75,6 +75,7 @@ class Comments(models.Model):
 class ReadingList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
+    author_name = models.CharField(max_length=256)
     book_id = models.CharField(max_length=50)
     cover_id = models.CharField(max_length=50, null=True, blank=True)
     
@@ -84,6 +85,7 @@ class ReadingList(models.Model):
         review = Reviews.objects.filter(user=self.user, book_id=self.book_id).first()
         return review.rating if review else None
 
+                
     def __str__(self):
         return f"{self.title} ({self.book_id})"
     

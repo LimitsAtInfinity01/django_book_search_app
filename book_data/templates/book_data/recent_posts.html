@@ -31,7 +31,15 @@
                                     <img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt="">
                                     <div class="username">{{ post.user }}</div>
                                 </div>
-                                <p>{{ post.created_at }}</p>
+                                <div>
+                                    <p>{{ post.created_at }}</p>
+                                    {% if request.user.is_authenticated %}
+                                    <form action="{% url 'delete_post' post.id %}"  method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit"  name="post" value="image" class="btn btn-outline-danger btn-sm">Delete post</button>
+                                    </form>
+                                    {% endif %}
+                                 </div>
                             </div>
                             <span class="line"></span>
                             <div class="description">
@@ -53,7 +61,15 @@
                                     <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
                                     <div class="username">{{ post.user }}</div>
                                 </div>
-                                <p>{{ post.created_at }}</p>
+                                <div>
+                                    <p>{{ post.created_at }}</p>
+                                    {% if request.user.is_authenticated %}
+                                    <form action="{% url 'delete_post' post.id %}"  method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit"  name="post" value="video" class="btn btn-outline-danger btn-sm">Delete post</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
                             </div>
                             <span class="line"></span>
                             <div class="description">
@@ -75,7 +91,15 @@
                                     <div class="avatar"><img class="profile-img" src="{{ post.user.profile.avatar.url }}" alt=""></div>
                                     <div class="username">{{ post.user }}</div>
                                 </div>
-                                <p>{{ post.created_at }}</p>
+                                <div>
+                                    <p>{{ post.created_at }}</p>
+                                    {% if request.user.is_authenticated %}
+                                    <form action="{% url 'delete_post' post.id %}"  method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit"  name="post" value="text" class="btn btn-outline-danger btn-sm">Delete post</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
                             </div>
                         </footer>
                     </div>

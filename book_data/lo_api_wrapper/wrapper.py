@@ -39,7 +39,7 @@ class BookAPI():
 
 class WorkAPI():
     def __init__(self, work_key) -> None:
-        self.url = f'https://openlibrary.org{work_key}.json'
+        self.url = f'https://openlibrary.org/work/{work_key}.json'
 
     def get_work(self):
         try:
@@ -47,23 +47,20 @@ class WorkAPI():
             self.work =  response.json()
             return self.work
         except RequestException:
-            return None
+            return {}
 
     
 
 # https://covers.openlibrary.org/b/$key/$value-$size.jpg
 class CoverAPI():
-    def __init__(self, value: str, size: str = 'M') -> None:
-        self.url = f'https://covers.openlibrary.org/b/olid/{value}-{size}.jpg?default=false'
+    def __init__(self, value, size: str = 'M') -> None:
+        self.value = value
+        self.size = size
 
     def get_image(self):
-        try:    
-            response = requests.get(self.url)
-        except RequestException:
-            return None
-        
-        if 299 >= response.status_code >= 200:
-            return self.url
+        if self.value == 'None':
+            self.url = None
         else:
-            return None
+            self.url = f'https://covers.openlibrary.org/b/olid/{self.value}-{self.size}.jpg?default=false'
 
+        return self.url
