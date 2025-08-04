@@ -7,7 +7,8 @@ from typing import Dict
 
 
 class BookAPI():
-    def __init__(self, search_term: str, limit: int = 99) -> None:
+    def __init__(self, search_term: str, limit:int) -> None:
+        print(limit)
         self.searc_term = search_term
         self.limit = f'&limit={limit}'
         self.url = f'https://openlibrary.org/search.json?q={search_term}{self.limit}'

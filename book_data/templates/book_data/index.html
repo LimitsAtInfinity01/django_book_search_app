@@ -209,6 +209,23 @@
 
                     {% endfor %}
 
+                            <div>
+                                <form id="more-form" action="" method="GET">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="more" id="more-count" value="{{ request.GET.more|default:20 }}">
+                                    <input type="hidden" name="query" id="more-query" value="{{ request.GET.query|default:'' }}">
+                                    <button type="submit">More</button>
+                                </form>
+                            </div>
+
+                            <script>
+                            document.getElementById('more-form').addEventListener('submit', function(e) {
+                                let moreInput = document.getElementById('more-count');
+                                let current = parseInt(moreInput.value) || 20;
+                                moreInput.value = current + 20;
+                            });
+                            </script>
+
                         {% else %}
 
                         <div class="page-description">
@@ -235,7 +252,6 @@
                             </div>
             
                         </div>
-
                 {% endif %}
             
             </div>

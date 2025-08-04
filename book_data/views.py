@@ -31,17 +31,16 @@ from book_data.fetch_book_data import  main_fetch
 # API Wrapper
 from book_data.lo_api_wrapper.wrapper import CoverAPI
  
-
 # Create your views here.
 def index(request):
     query = request.GET.get('query')
     image_form = ImagePostForm()
     video_form = VideoPostForm()
     text_form = TextPostForm()
-    print('Hello')
+    more = int(request.GET.get('more', 20))
+
     if request.method == 'POST':
         form_type = request.POST.get('form_type')
-
         if form_type == 'image_form':
             form = ImagePostForm(request.POST, request.FILES)
 
@@ -57,9 +56,9 @@ def index(request):
             post.user = request.user
             post.save()
             return redirect('recent_posts')
-
+        
     if query:
-        books = main_fetch(query)
+        books = main_fetch(query, more)
         context = {
             'books': books,
             'image_form': image_form,

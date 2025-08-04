@@ -3,9 +3,9 @@ from book_data.lo_api_wrapper.wrapper import BookAPI, WorkAPI, CoverAPI
 
 
 #Main fetch book data function
-def main_fetch(search_term, limit: int = 99):
+def main_fetch(search_term, limit: int):
 
-    search = BookAPI(search_term=search_term, limit=10)
+    search = BookAPI(search_term=search_term, limit=limit)
     books = search.get_docs()
     
     book_list = []
@@ -29,10 +29,6 @@ def main_fetch(search_term, limit: int = 99):
             "cover_url": cover_url
         }
         book_list.append(dict)
-
-    for book in book_list:
-        for k, v in book.items():
-            print(f'{k}: {v}')
 
     return book_list
 
